@@ -1,0 +1,10 @@
+[project]
+name = "solana-history-research"
+version = "0.1.0"
+description = "Offline account-history proof of concept and Solana infrastructure research"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

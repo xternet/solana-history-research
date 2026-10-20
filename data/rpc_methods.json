@@ -1,0 +1,324 @@
+{
+  "schema": "solana-historical-rpc-scope/v1",
+  "as_of": "2026-10-18",
+  "count": 24,
+  "groups": [
+    {
+      "group": "Accounts, discovery and SOL supply",
+      "methods": [
+        "getAccountInfo",
+        "getBalance",
+        "getLargestAccounts",
+        "getMultipleAccounts",
+        "getProgramAccounts",
+        "getSupply"
+      ]
+    },
+    {
+      "group": "Token state and discovery",
+      "methods": [
+        "getTokenAccountBalance",
+        "getTokenAccountsByDelegate",
+        "getTokenAccountsByOwner",
+        "getTokenLargestAccounts",
+        "getTokenSupply"
+      ]
+    },
+    {
+      "group": "Fees, rent and blockhash validity",
+      "methods": [
+        "getFeeForMessage",
+        "getMinimumBalanceForRentExemption",
+        "getLatestBlockhash",
+        "isBlockhashValid"
+      ]
+    },
+    {
+      "group": "Stake, vote, leaders and production",
+      "methods": [
+        "getVoteAccounts",
+        "getStakeMinimumDelegation",
+        "getLeaderSchedule",
+        "getSlotLeader",
+        "getSlotLeaders",
+        "getBlockProduction"
+      ]
+    },
+    {
+      "group": "Inflation parameters",
+      "methods": [
+        "getInflationGovernor",
+        "getInflationRate"
+      ]
+    },
+    {
+      "group": "Historical execution",
+      "methods": [
+        "simulateTransaction"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "method": "getAccountInfo",
+      "dependencies": [
+        "Complete account image/existence at cursor; owner-specific parser and same-cursor mint/Clock for jsonParsed."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L537",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/parsed_token_accounts.rs#L24",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3260"
+      ]
+    },
+    {
+      "method": "getBalance",
+      "dependencies": [
+        "Lamports plus proven account absence and cursor."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L943",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2795"
+      ]
+    },
+    {
+      "method": "getLargestAccounts",
+      "dependencies": [
+        "Global lamport ordering, tie rules and circulation classification; normalized recomputation is derivable."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L1052",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L1070",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc_cache.rs#L30",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3401"
+      ]
+    },
+    {
+      "method": "getMultipleAccounts",
+      "dependencies": [
+        "Same coherent account view and parser dependencies for every requested key."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L565",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3322",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3268"
+      ]
+    },
+    {
+      "method": "getProgramAccounts",
+      "dependencies": [
+        "Historical owner-membership index or complete state scan, raw bytes and parser dependencies."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L606",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2265",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3450",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc-client-types/src/filter.rs#L8",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3393"
+      ]
+    },
+    {
+      "method": "getSupply",
+      "dependencies": [
+        "Native capitalization; full stake/lamport state, Clock lockups and versioned static noncirculating/withdraw-authority lists."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L1124",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/runtime/src/non_circulating_supply.rs#L19",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/runtime/src/non_circulating_supply.rs#L301",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3408"
+      ]
+    },
+    {
+      "method": "getTokenAccountBalance",
+      "dependencies": [
+        "Token account, mint decimals/extensions, token-program identity and historical Clock."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2024",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/parsed_token_accounts.rs#L114",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3287"
+      ]
+    },
+    {
+      "method": "getTokenAccountsByDelegate",
+      "dependencies": [
+        "Historical approved-delegate membership or token-program/mint scan."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2197",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3525",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3436"
+      ]
+    },
+    {
+      "method": "getTokenAccountsByOwner",
+      "dependencies": [
+        "Historical token-owner membership, mint/program validation, all account images."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2143",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2322",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3508",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3427"
+      ]
+    },
+    {
+      "method": "getTokenLargestAccounts",
+      "dependencies": [
+        "Historical mint-membership and amount order statistics or full scan; mint UI dependencies."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2087",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3419"
+      ]
+    },
+    {
+      "method": "getTokenSupply",
+      "dependencies": [
+        "Mint base supply, decimals, extensions, historical Clock and parser."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2048",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/parsed_token_accounts.rs#L114",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3295"
+      ]
+    },
+    {
+      "method": "getFeeForMessage",
+      "dependencies": [
+        "Recent blockhash fee queue, durable-nonce state, fee structure/features, ALT/reserved-key sanitization."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L4349",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3683"
+      ]
+    },
+    {
+      "method": "getMinimumBalanceForRentExemption",
+      "dependencies": [
+        "Historical Rent/rent policy and runtime arithmetic."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L597",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3037"
+      ]
+    },
+    {
+      "method": "getLatestBlockhash",
+      "dependencies": [
+        "Exact BlockhashQueue, current last blockhash, block height/age policy."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2418",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3668"
+      ]
+    },
+    {
+      "method": "isBlockhashValid",
+      "dependencies": [
+        "Historical queue and age/feature rules."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2433",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3675"
+      ]
+    },
+    {
+      "method": "getVoteAccounts",
+      "dependencies": [
+        "Native current vote-stake cache, epoch vote account membership, vote states/credits/root/last vote, feature-gated commission representation."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L1158",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2844"
+      ]
+    },
+    {
+      "method": "getStakeMinimumDelegation",
+      "dependencies": [
+        "Historical feature activation and stake-runtime version."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2443",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3691"
+      ]
+    },
+    {
+      "method": "getLeaderSchedule",
+      "dependencies": [
+        "Frozen epoch vote stakes, schedule seed/algorithm/epoch configuration and cache availability policy."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2990",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/runtime/src/leader_schedule_utils.rs#L12",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L2853"
+      ]
+    },
+    {
+      "method": "getSlotLeader",
+      "dependencies": [
+        "Historical Bank collector/leader identity and commitment view."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L993",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3058"
+      ]
+    },
+    {
+      "method": "getSlotLeaders",
+      "dependencies": [
+        "Epoch stake-derived schedule for every touched epoch."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L998",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3130",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3065"
+      ]
+    },
+    {
+      "method": "getBlockProduction",
+      "dependencies": [
+        "Leader schedules from frozen epoch stakes and SlotHistory/complete produced/skipped coverage."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3160",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/runtime/src/leader_schedule_utils.rs#L12",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3077"
+      ]
+    },
+    {
+      "method": "getInflationGovernor",
+      "dependencies": [
+        "Bank inflation configuration and era feature transitions."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L903",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3045"
+      ]
+    },
+    {
+      "method": "getInflationRate",
+      "dependencies": [
+        "Inflation governor, epoch, slot-in-year computation/genesis time/epoch sizing."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L910",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3052"
+      ]
+    },
+    {
+      "method": "simulateTransaction",
+      "dependencies": [
+        "Exact account/pre-state and native context, loader/runtime, ALTs, syscalls, original status membership as appropriate."
+      ],
+      "source_urls": [
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L4038",
+        "https://github.com/anza-xyz/agave/blob/825efd18292aff6ffcf9daa0f7612f21b3531a72/rpc/src/rpc.rs#L3605"
+      ]
+    }
+  ],
+  "planned_not_implemented": true,
+  "definition": "State-backed historical equivalents of current standard HTTP RPC capabilities; excludes ledger-only queries/counters, constant configuration, telemetry, administrative controls, deprecated aliases and subscriptions.",
+  "not_a_provider_exclusivity_claim": true,
+  "source": "https://solana.com/docs/rpc/http"
+}

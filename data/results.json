@@ -1,0 +1,873 @@
+{
+  "schema": "solana-history-research-results/v1",
+  "as_of": "2026-10-18",
+  "status": "Research measurements and conditional projections; not production-qualified",
+  "storage": {
+    "covered_period": "2020 through partial2026",
+    "reference_year": 2025,
+    "unit": "Decimal TB, one compressed logical copy",
+    "components": [
+      {
+        "id": "base",
+        "data": "Genesis + one retained base snapshot",
+        "history_tb": 0.113831643541,
+        "year_tb": 0.0,
+        "basis": "Reference snapshot",
+        "qualification": "Pending qualification"
+      },
+      {
+        "id": "accounts",
+        "data": "All account changes + deletions",
+        "history_tb": 99.00375903509112,
+        "year_tb": 27.055130742846657,
+        "basis": "Annual model from recent 100-slot density and historical activity proxies",
+        "qualification": "Pending qualification"
+      },
+      {
+        "id": "indexes",
+        "data": "Account-version indexes + routing",
+        "history_tb": 35.544871230983205,
+        "year_tb": 9.713481061371038,
+        "basis": "Annual model from recent 100-slot density and historical activity proxies",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "context",
+        "data": "Bank context, sysvars + blockhash queue",
+        "history_tb": 2.6650171333751187,
+        "year_tb": 0.48620831412835935,
+        "basis": "Annual model from recent 100-slot density and historical activity proxies",
+        "qualification": "Pending qualification"
+      },
+      {
+        "id": "wires",
+        "data": "Original transaction bytes",
+        "history_tb": 96.0825644054224,
+        "year_tb": 23.89241786022285,
+        "basis": "832 sampled blocks across 2020–2026, with each year's sampled wire density and historical activity weights; only 10 sampled 2025 blocks",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "locator",
+        "data": "Signature locator + wire-frame directory",
+        "history_tb": 9.788294001439668,
+        "year_tb": 2.2308761985850563,
+        "basis": "Small prototype + full-history projection",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "original_results",
+        "data": "Original transaction results",
+        "history_tb": 60.66832381377763,
+        "year_tb": 20.090462266968803,
+        "basis": "160-block extrapolation",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "result_indexes",
+        "data": "Result offsets + block catalogue",
+        "history_tb": 2.5500137285328575,
+        "year_tb": 0.5764113448401487,
+        "basis": "Format allowance",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "bank_checkpoints",
+        "data": "Metadata-only native Bank checkpoints",
+        "history_tb": 0.3156,
+        "year_tb": 0.05757837051673149,
+        "basis": "Scenario",
+        "qualification": "Pending qualification"
+      },
+      {
+        "id": "receipts",
+        "data": "Replay-check receipts + state provenance",
+        "history_tb": 0.0866739886487114,
+        "year_tb": 0.015812886668499632,
+        "basis": "Format allowance",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "phase_tags",
+        "data": "Automatic-write causes + phase/loader events",
+        "history_tb": 1.0,
+        "year_tb": 0.18244097121904781,
+        "basis": "Unmeasured allowance",
+        "qualification": "Pending qualification"
+      },
+      {
+        "id": "build_artifacts",
+        "data": "Versioned source, IDL, debug + toolchain artifacts",
+        "history_tb": 0.55,
+        "year_tb": 0.1003425341704763,
+        "basis": "Scenario",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "envelopes",
+        "data": "Block envelopes, entries, rewards + proof fields",
+        "history_tb": 15.058222657788564,
+        "year_tb": 2.1490819884557797,
+        "basis": "160-block extrapolation",
+        "qualification": "Prototype / model"
+      },
+      {
+        "id": "address_history",
+        "data": "Address-to-transaction postings",
+        "history_tb": 8.336086699420054,
+        "year_tb": 1.9008419109798826,
+        "basis": "24055TX /363495postings;2048addresses/frame; recent bytes/TX projection, not historical density census",
+        "qualification": "20-slot codec/query parity; global density pending"
+      },
+      {
+        "id": "relations",
+        "data": "Program / mint / token-authority / delegate intervals",
+        "history_tb": 0.657144847244569,
+        "year_tb": 0.14984590639080705,
+        "basis": "3054new intervals +9552B net seed closures /24055TX; first-known cohort seed not repeated; full bootstrap index I unmeasured",
+        "qualification": "Real intervals + intra-slot/ranking parity; full inventory pending"
+      },
+      {
+        "id": "new_dictionary",
+        "data": "Incremental shared address dictionary",
+        "history_tb": 0.2865692986460366,
+        "year_tb": 0.06534516169372297,
+        "basis": "323new role-only IDs /24055TX,11305B; existing IDs reused; global uniqueness may differ",
+        "qualification": "Sample measured; global unique growth pending"
+      },
+      {
+        "id": "new_routing",
+        "data": "Additional query-index routing and framing",
+        "history_tb": 0.9279800845310661,
+        "year_tb": 0.21160329790644128,
+        "basis": "10% allowance retained beyond local compressed frame directories; global fanout/compaction not benchmarked",
+        "qualification": "Allowance; not global routing proof"
+      }
+    ],
+    "baseline_history_tb": 323.4271716386003,
+    "extra_query_indexes_history_tb": 10.207780929841725,
+    "native_correction_tb": null,
+    "bootstrap_index_tb": null,
+    "complete_bound": false,
+    "annual_baseline": [
+      {
+        "year": 2020,
+        "baseline_tb": 4.325415836132897
+      },
+      {
+        "year": 2021,
+        "baseline_tb": 18.907362271675005
+      },
+      {
+        "year": 2022,
+        "baseline_tb": 41.09026118936942
+      },
+      {
+        "year": 2023,
+        "baseline_tb": 52.08202913604216
+      },
+      {
+        "year": 2024,
+        "baseline_tb": 56.34850059240517
+      },
+      {
+        "year": 2025,
+        "baseline_tb": 86.55024453999344
+      },
+      {
+        "year": 2026,
+        "baseline_tb": 64.00952642944117
+      }
+    ],
+    "one_time_baseline_seed_tb": 0.113831643541,
+    "assumptions": [
+      "Recent20-slot bytes/TX applied to published annual and historical activity counts; not historical index-density measurement.",
+      "Initial cohort seed is NOT repeated every20slots. Its net encoded closure-byte increase IS counted.",
+      "Full-network bootstrap discovery-index seed I remains unmeasured; modeled total excludes I, and native correction C remains separate.",
+      "A10% global routing reserve is retained; actual global fanout, bloom filters, compaction and cache residency are not proved.",
+      "Dictionary rate assumes recent within-sample unique-role discovery continues; true globally unique growth may differ.",
+      "SET adds actual member-update, compact-posting, membership encode/repack and grouped durability. Base58/oracle source preparation is excluded because native resolved IDs already exist.",
+      "SET is composed, not integrated benchmark: closure append/merge and streaming global ingestion remain implementation gates.",
+      "Query data is a known captured-key cohort with resident metadata and HDD payload, no network/JSON/target execution; no full-network discovery or latency SLA."
+    ],
+    "modeled_history_tb": 333.63495256844203,
+    "modeled_reference_year_tb": 88.87788081696429
+  },
+  "set": {
+    "factor_unit": "Modeled milliseconds per produced block",
+    "factors": [
+      {
+        "id": "S1",
+        "name": "Archive download",
+        "ms": 24.68227382592252,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": null,
+          "memory_gib": null,
+          "scope": "Per-stage allocation not retained in this export; not a normalized worker"
+        },
+        "stage_days": 123.80272693358766
+      },
+      {
+        "id": "S2",
+        "name": "CAR extraction and checks",
+        "ms": 24.40079816768555,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 8,
+          "memory_gib": 8,
+          "scope": "Cached CAR parsing in result/context packing launch"
+        },
+        "stage_days": 122.39088561374278
+      },
+      {
+        "id": "S3",
+        "name": "Native input import",
+        "ms": 15.17159983582518,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": null,
+          "memory_gib": null,
+          "scope": "Per-stage allocation not retained in this export; not a normalized worker"
+        },
+        "stage_days": 76.09855740469348
+      },
+      {
+        "id": "S4",
+        "name": "Native execution and account capture",
+        "ms": 140.987331336572,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 16,
+          "memory_gib": 32,
+          "scope": "Native replay launcher ceiling; separate initialization"
+        },
+        "stage_days": 707.172127076282
+      },
+      {
+        "id": "S5",
+        "name": "Account encoding, indexes and durability",
+        "ms": 52.59636430755847,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 16,
+          "memory_gib": 8,
+          "scope": "Full-shard encoder group ceiling; eight subprocesses share the quota"
+        },
+        "stage_days": 263.81578026370437
+      },
+      {
+        "id": "S6",
+        "name": "Account metadata packaging",
+        "ms": 4.4495176477701275,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 16,
+          "memory_gib": 8,
+          "scope": "Metadata-pack trial group ceiling"
+        },
+        "stage_days": 22.31813901013131
+      },
+      {
+        "id": "S7",
+        "name": "Transaction packaging and locator",
+        "ms": 11.398111790713445,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": null,
+          "memory_gib": null,
+          "scope": "Per-stage allocation not retained in this export; not a normalized worker"
+        },
+        "stage_days": 57.171285414643556
+      },
+      {
+        "id": "S8",
+        "name": "Native context packaging",
+        "ms": 2.5652120634913445,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": null,
+          "memory_gib": null,
+          "scope": "Per-stage allocation not retained in this export; not a normalized worker"
+        },
+        "stage_days": 12.866733869941338
+      },
+      {
+        "id": "S9",
+        "name": "Original results/envelope encoding",
+        "ms": 6.45947946301577,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 8,
+          "memory_gib": 8,
+          "scope": "Final result/context packing launch"
+        },
+        "stage_days": 32.39981768831095
+      },
+      {
+        "id": "S10",
+        "name": "Result indexes and grouped durability",
+        "ms": 5.366096608340741,
+        "basis": "Composed historical model; not integrated fleet measurement",
+        "worker_limits": {
+          "logical_cpu_quota": 8,
+          "memory_gib": 8,
+          "scope": "Final result/context packing launch"
+        },
+        "stage_days": 26.91556692819526
+      },
+      {
+        "id": "S11",
+        "name": "Additional query-index update, encode/repack and durability",
+        "ms": 67.29565142940852,
+        "basis": "Measured20-slot reference pipeline projected per TX; includes cohort-seed repack, not integrated native/fleet throughput",
+        "worker_limits": {
+          "logical_cpu_quota": 2,
+          "memory_gib": 4,
+          "scope": "Persistent discovery/index launch"
+        },
+        "stage_days": 337.5452851909834
+      }
+    ],
+    "factor_total_ms": 355.3724364763037,
+    "produced_blocks_model": 433369943.243557,
+    "transactions_model": 609767755765.6267,
+    "new_index_sample_compute_seconds": 0.971158143132925,
+    "new_index_sample_durable_seconds": 0.17934204638004303,
+    "stage_day_scope": "Sum of projected stage-wall days measured under different resource ceilings; not homogeneous worker-days or fleet elapsed time",
+    "compute_side_stage_days": 1658.6941784606283,
+    "serial_stage_days": 1782.4969053942161
+  },
+  "get": {
+    "factor_unit": "Measured mean milliseconds per complete replay request",
+    "factors": [
+      {
+        "id": "G1",
+        "name": "signature wire",
+        "ms": 9.724576244054482
+      },
+      {
+        "id": "G2",
+        "name": "input assembly and identity",
+        "ms": 143.87517324403711
+      },
+      {
+        "id": "G3",
+        "name": "original results and expected state",
+        "ms": 26.51183607808331
+      },
+      {
+        "id": "G4",
+        "name": "native input serialize",
+        "ms": 66.95764832067907
+      },
+      {
+        "id": "G5",
+        "name": "fresh native process and output",
+        "ms": 458.0262540812381
+      },
+      {
+        "id": "G6",
+        "name": "original and full state verification",
+        "ms": 0.14132503093334667
+      },
+      {
+        "id": "G7",
+        "name": "durable receipt",
+        "ms": 6.177322710292382
+      },
+      {
+        "id": "G8",
+        "name": "Other request overhead",
+        "ms": 2.142741208710845
+      }
+    ],
+    "factor_total_ms": 713.5568769180287,
+    "p50_ms": 324.4337663054466,
+    "requests": [
+      {
+        "condition": "advised-cold",
+        "concurrency": 1,
+        "p10_ms": 248.4714798629284,
+        "p50_ms": 324.4337663054466,
+        "p90_ms": 1775.8639082312584,
+        "sample_max_ms": 3211.1065723001957,
+        "mean_ms": 713.5568769180287,
+        "count": 171
+      },
+      {
+        "condition": "advised-cold",
+        "concurrency": 4,
+        "p10_ms": 273.30533042550087,
+        "p50_ms": 690.2775354683399,
+        "p90_ms": 2568.8314884901047,
+        "sample_max_ms": 6071.467824280262,
+        "mean_ms": 1133.1210376705692,
+        "count": 171
+      },
+      {
+        "condition": "warm",
+        "concurrency": 1,
+        "p10_ms": 193.09572130441666,
+        "p50_ms": 281.0612227767706,
+        "p90_ms": 1320.9798000752926,
+        "sample_max_ms": 2502.958383411169,
+        "mean_ms": 631.4248476798335,
+        "count": 36
+      }
+    ],
+    "historical_queries": [
+      {
+        "name": "Program accounts, dataSize165",
+        "family": 0,
+        "condition": "advised-cold",
+        "count": 3,
+        "p10_ms": 386.9314379990101,
+        "p50_ms": 507.78862461447716,
+        "p90_ms": 1176.4443814754486,
+        "max_ms": 1176.4443814754486,
+        "returned_accounts": [
+          51,
+          101,
+          1568
+        ],
+        "min_ms": 386.9314379990101
+      },
+      {
+        "name": "Program accounts, dataSize165",
+        "family": 0,
+        "condition": "warm",
+        "count": 3,
+        "p10_ms": 84.72330123186111,
+        "p50_ms": 147.02099934220314,
+        "p90_ms": 207.5277455151081,
+        "max_ms": 207.5277455151081,
+        "returned_accounts": [
+          51,
+          101,
+          1568
+        ],
+        "min_ms": 84.72330123186111
+      },
+      {
+        "name": "Mint accounts",
+        "family": 1,
+        "condition": "advised-cold",
+        "count": 6,
+        "p10_ms": 18.328409641981125,
+        "p50_ms": 79.26519960165024,
+        "p90_ms": 194.73933055996895,
+        "max_ms": 216.43218770623207,
+        "returned_accounts": [
+          219,
+          52,
+          23,
+          607,
+          418,
+          138
+        ],
+        "min_ms": 18.328409641981125
+      },
+      {
+        "name": "Mint accounts",
+        "family": 1,
+        "condition": "warm",
+        "count": 6,
+        "p10_ms": 9.59867238998413,
+        "p50_ms": 29.961662366986275,
+        "p90_ms": 44.48472708463669,
+        "max_ms": 69.75329294800758,
+        "returned_accounts": [
+          219,
+          52,
+          23,
+          607,
+          418,
+          138
+        ],
+        "min_ms": 9.59867238998413
+      },
+      {
+        "name": "Token authority accounts",
+        "family": 2,
+        "condition": "advised-cold",
+        "count": 3,
+        "p10_ms": 16.963407397270203,
+        "p50_ms": 18.535949289798737,
+        "p90_ms": 21.943196654319763,
+        "max_ms": 21.943196654319763,
+        "returned_accounts": [
+          26,
+          19,
+          14
+        ],
+        "min_ms": 16.963407397270203
+      },
+      {
+        "name": "Token authority accounts",
+        "family": 2,
+        "condition": "warm",
+        "count": 3,
+        "p10_ms": 9.64241847395897,
+        "p50_ms": 10.553296655416489,
+        "p90_ms": 11.643074452877045,
+        "max_ms": 11.643074452877045,
+        "returned_accounts": [
+          26,
+          19,
+          14
+        ],
+        "min_ms": 9.64241847395897
+      },
+      {
+        "name": "Token delegate accounts",
+        "family": 3,
+        "condition": "advised-cold",
+        "count": 3,
+        "p10_ms": 0.8276402950286865,
+        "p50_ms": 1.166805624961853,
+        "p90_ms": 1.1991597712039948,
+        "max_ms": 1.1991597712039948,
+        "returned_accounts": [
+          1,
+          1,
+          1
+        ],
+        "min_ms": 0.8276402950286865
+      },
+      {
+        "name": "Token delegate accounts",
+        "family": 3,
+        "condition": "warm",
+        "count": 3,
+        "p10_ms": 0.2684295177459717,
+        "p50_ms": 0.3119148313999176,
+        "p90_ms": 0.3764592111110687,
+        "max_ms": 0.3764592111110687,
+        "returned_accounts": [
+          1,
+          1,
+          1
+        ],
+        "min_ms": 0.2684295177459717
+      }
+    ],
+    "cohort_ranking_ms": {
+      "count": 3,
+      "p10_ms": 1139.7366523742676,
+      "p50_ms": 4199.705399572849,
+      "p90_ms": 6798.44406992197,
+      "max_ms": 6798.44406992197,
+      "min_ms": 1139.7366523742676
+    },
+    "scope": "HDD payload with resident routing metadata; includes decompression; excludes provider/network/global routing. New discovery queries and full replay are different cohorts, not additive medians.",
+    "factor_cohort": {
+      "condition": "advised-cold",
+      "concurrency": 1,
+      "count": 171
+    }
+  },
+  "sample": {
+    "slots": [
+      454362498,
+      454362499,
+      454362500,
+      454362501,
+      454362502,
+      454362503,
+      454362504,
+      454362505,
+      454362506,
+      454362507,
+      454362508,
+      454362509,
+      454362510,
+      454362511,
+      454362512,
+      454362513,
+      454362514,
+      454362515,
+      454362516,
+      454362517
+    ],
+    "counts": {
+      "transactions": 24055,
+      "stores": 73232,
+      "noops": 8593,
+      "automatic_stores": 100,
+      "token22_store_rows": 6129,
+      "postings": 363495,
+      "captured_account_keys": 24872,
+      "baseline_shared_keys": 69273,
+      "new_role_only_keys": 323,
+      "member_rows": 36254,
+      "seed_member_rows": 33200,
+      "transition_intervals": 3054
+    },
+    "parity": {
+      "membership_queries": 108,
+      "history_and_bidirectional_paging": 12,
+      "full_primary_payload_queries": 30
+    },
+    "boundary_checks": {
+      "family0_before_after": 12,
+      "family1_before_after": 12,
+      "family2_before_after": 12,
+      "family3_before_after": 8,
+      "cohort_top20_token_ranking": 3,
+      "token_amount_filter": 3
+    },
+    "runtime_epoch": [
+      1051
+    ],
+    "index_worker_peak_rss_kib": 326828,
+    "cohort_seed_bytes": 122743,
+    "net_seed_closure_bytes": 9552,
+    "query_scope": "Captured-account cohort, not complete network inventory"
+  },
+  "database_comparison": {
+    "keys": 69245,
+    "versions": 383524,
+    "matched_target_accounts": [
+      264,
+      263,
+      289,
+      263
+    ],
+    "single_key": [
+      {
+        "name": "immutable-variable-index",
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 0.0025033950805664062,
+            "p50_ms": 0.49141794443130493,
+            "p90_ms": 0.5360543727874756,
+            "max_ms": 0.9192079305648804
+          },
+          "warm": {
+            "p10_ms": 0.0008568167686462402,
+            "p50_ms": 0.009600073099136353,
+            "p90_ms": 0.4062950611114502,
+            "max_ms": 0.6818436086177826
+          }
+        }
+      },
+      {
+        "name": "rocksdb-zstd-thin-index",
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 0.5817823112010956,
+            "p50_ms": 0.7563568651676178,
+            "p90_ms": 0.852435827255249,
+            "max_ms": 1.3348981738090515
+          },
+          "warm": {
+            "p10_ms": 0.24136528372764587,
+            "p50_ms": 0.688508152961731,
+            "p90_ms": 0.737220048904419,
+            "max_ms": 1.0587014257907867
+          }
+        }
+      },
+      {
+        "name": "clickhouse-mergetree-thin-index",
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 6.719503551721573,
+            "p50_ms": 9.51748713850975,
+            "p90_ms": 12.177124619483948,
+            "max_ms": 55.85180968046188
+          },
+          "warm": {
+            "p10_ms": 2.289876341819763,
+            "p50_ms": 2.963770180940628,
+            "p90_ms": 3.7871189415454865,
+            "max_ms": 10.25489717721939
+          }
+        }
+      }
+    ],
+    "account_sets": [
+      {
+        "name": "immutable-variable-index",
+        "requests": 24,
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 19.64077353477478,
+            "p50_ms": 25.266848504543304,
+            "p90_ms": 33.681418746709824,
+            "max_ms": 34.1215655207634,
+            "count": 12
+          },
+          "warm-primed": {
+            "p10_ms": 1.6643442213535309,
+            "p50_ms": 3.514941781759262,
+            "p90_ms": 7.130440324544907,
+            "max_ms": 7.268752902746201,
+            "count": 12
+          }
+        }
+      },
+      {
+        "name": "rocksdb-zstd-thin-index",
+        "requests": 24,
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 77.8941661119461,
+            "p50_ms": 93.5685746371746,
+            "p90_ms": 113.18669095635414,
+            "max_ms": 169.55189034342766,
+            "count": 12
+          },
+          "warm-primed": {
+            "p10_ms": 8.14763829112053,
+            "p50_ms": 8.416719734668732,
+            "p90_ms": 16.71678200364113,
+            "max_ms": 19.636426120996475,
+            "count": 12
+          }
+        }
+      },
+      {
+        "name": "clickhouse-mergetree-batched",
+        "requests": 24,
+        "timings": {
+          "cold-advised": {
+            "p10_ms": 45.71148008108139,
+            "p50_ms": 56.10999837517738,
+            "p90_ms": 60.77335402369499,
+            "max_ms": 82.34329521656036,
+            "count": 12
+          },
+          "warm-primed": {
+            "p10_ms": 21.424945443868637,
+            "p50_ms": 29.187772423028946,
+            "p90_ms": 44.72862556576729,
+            "max_ms": 48.708152025938034,
+            "count": 12
+          }
+        }
+      }
+    ],
+    "scope": "Pointer lookup only; embedded immutable/RocksDB vs batched loopback ClickHouse; not full payload/VM or universal database ranking"
+  },
+  "open_native_groups": [
+    {
+      "group": "Earlier epoch full stake/vote snapshots and reward partitions",
+      "fields": [
+        "epoch_stakes",
+        "epoch_reward_status",
+        "epoch_rewards_calculation_cache",
+        "partitioned_rewards_stake_account_stores_per_block"
+      ],
+      "required_action": "Retain exact cache/partition identities with shared account references, or prove matching-runtime derivation."
+    },
+    {
+      "group": "Per-boundary counters, fee/rent accounting and native admission prefix",
+      "fields": [
+        "capitalization",
+        "collector_fee_details",
+        "cost_tracker",
+        "entry_bytes_consumed",
+        "accounts_data_size_initial",
+        "accounts_data_size_delta_on_chain",
+        "accounts_data_size_delta_off_chain",
+        "tick_height",
+        "signature_count"
+      ],
+      "required_action": "Validate deterministic derivations from original metadata/account changes; capture compact native delta only for unresolved terms."
+    },
+    {
+      "group": "Program deployment/effective visibility and runtime environment",
+      "fields": [
+        "transaction_processor",
+        "check_program_deployment_slot",
+        "reserved_account_keys",
+        "compute_budget",
+        "transaction_account_lock_limit"
+      ],
+      "required_action": "Retain semantic loader/runtime facts or qualify versioned reconstruction; no universal persistent JIT dump."
+    },
+    {
+      "group": "Static or era-scoped runtime configuration",
+      "fields": [
+        "hard_forks",
+        "hashes_per_tick",
+        "ticks_per_slot",
+        "ns_per_slot",
+        "genesis_creation_time",
+        "slots_per_year",
+        "slot_params",
+        "leader",
+        "inflation",
+        "cluster_type",
+        "vote_only_bank",
+        "store_transaction_signatures_in_status_cache"
+      ],
+      "required_action": "Versioned genesis/build/era anchors plus tested derivations, not repeated full payload every TX."
+    },
+    {
+      "group": "Verifier roots, automatic causes, phase order and complete inventory",
+      "fields": [
+        "accounts_lt_hash",
+        "bank_hash_stats",
+        "expected_bank_hash",
+        "block_component_processor",
+        "freeze_started"
+      ],
+      "required_action": "Capture required per-boundary cause/order/commitment facts; full-keyspace and epoch/reward fixture gates remain."
+    }
+  ],
+  "integrity": {
+    "native_bank_fields_audited": 70,
+    "named_context_json_fields": 23,
+    "native_capture_complete": false,
+    "trustless_account_proof": false,
+    "source_artifacts": [
+      {
+        "artifact": "tracker.json",
+        "sha256": "c78e00ec0e95276d3ebb91359eebc16a46796aa771245dd54d517cef963c3e5e"
+      },
+      {
+        "artifact": "final-model-v2.json",
+        "sha256": "335e5d5fe757f85e9b0d0d5624d36c3c5beec3091bde43a56b96e20b9ca21c4f"
+      },
+      {
+        "artifact": "measure-persistent.json",
+        "sha256": "b1cf239d657e973d01367981ddd8bbcfb92b93ca6819ca71ef587b1f5373021b"
+      },
+      {
+        "artifact": "native-audit.json",
+        "sha256": "9b34df6561f83e31d063cbbe0261cad7f6902a53f8bf72a3f6020fcebc0a8f4b"
+      },
+      {
+        "artifact": "reconciled.json",
+        "sha256": "ce3db3d4e41fcb63baefd9df3ce1ba396e27e7e0dbb5564baa0caeab05ed1136"
+      },
+      {
+        "artifact": "database-batch.json",
+        "sha256": "24080f7c628d5945fc42f098c247749d8bc57425f8ff829e907d9ec7ffaf4718"
+      },
+      {
+        "artifact": "database-bench.json",
+        "sha256": "3059e1b531fbad8af708b77649ed00104cf8959832f929dd2533ea13feebe226"
+      },
+      {
+        "artifact": "method-matrix-v2.json",
+        "sha256": "4f032122c81e8e2e019bb7b39b1dfb0e44394b5b59a9a72d976c9c3418923a7d"
+      },
+      {
+        "artifact": "measure.py",
+        "sha256": "43db8c1e9af1ab2fa39f5d578b74b70facab0957d9046520a041f13668bfd94e"
+      },
+      {
+        "artifact": "measure_persistent-launch.json",
+        "sha256": "55dd108a6225d067376d143b2a7d118ed932b4c9d9b48f4b1079aec780643a59"
+      },
+      {
+        "artifact": "pack-sample-v2-launch.json",
+        "sha256": "12422ab558872a44ad6c249d7150445c5c2b2848cc346d01bf4f7ef2494ba834"
+      }
+    ]
+  }
+}

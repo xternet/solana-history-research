@@ -1,0 +1,1055 @@
+{
+  "as_of": "2026-10-20",
+  "scope": "Sanitized retained audit evidence; original large inputs are not bundled.",
+  "storage": {
+    "baseline_tb": 333.63495256844203,
+    "codec_candidates": [
+      {
+        "level": 1,
+        "same_model_total_tb_excluding_C_I": 355.0811688152798,
+        "saved_tb": -21.446216246837746,
+        "saved_percent_total": -6.428048404921922,
+        "saved_tb_by_disjoint_component": {
+          "results_and_envelopes": -9.635139020880032,
+          "account_full_anchors": -1.0157267543045772,
+          "transaction_wires": -10.795350471653137
+        },
+        "encode_cpu_ratios_by_component": {
+          "results_and_envelopes": 0.6733337571254913,
+          "account_full_anchors": 0.7827311008388448,
+          "transaction_wires": 0.5102907776795986
+        }
+      },
+      {
+        "level": 3,
+        "same_model_total_tb_excluding_C_I": 333.63495256844203,
+        "saved_tb": 0.0,
+        "saved_percent_total": 0.0,
+        "saved_tb_by_disjoint_component": {
+          "results_and_envelopes": 0.0,
+          "account_full_anchors": 0.0,
+          "transaction_wires": 0.0
+        },
+        "encode_cpu_ratios_by_component": {
+          "results_and_envelopes": 1.0,
+          "account_full_anchors": 1.0,
+          "transaction_wires": 1.0
+        }
+      },
+      {
+        "level": 6,
+        "same_model_total_tb_excluding_C_I": 327.125750822405,
+        "saved_tb": 6.5092017460370535,
+        "saved_percent_total": 1.9509951508158465,
+        "saved_tb_by_disjoint_component": {
+          "results_and_envelopes": 4.490787636027761,
+          "account_full_anchors": 0.9703725143519543,
+          "transaction_wires": 1.0480415956573381
+        },
+        "encode_cpu_ratios_by_component": {
+          "results_and_envelopes": 2.769758888892605,
+          "account_full_anchors": 2.5088142519781798,
+          "transaction_wires": 2.0853542294684293
+        }
+      },
+      {
+        "level": 9,
+        "same_model_total_tb_excluding_C_I": 325.286291200858,
+        "saved_tb": 8.348661367584048,
+        "saved_percent_total": 2.502334153934726,
+        "saved_tb_by_disjoint_component": {
+          "results_and_envelopes": 5.596313773728909,
+          "account_full_anchors": 1.4868013312281836,
+          "transaction_wires": 1.2655462626269554
+        },
+        "encode_cpu_ratios_by_component": {
+          "results_and_envelopes": 3.829010488506058,
+          "account_full_anchors": 3.935898197668272,
+          "transaction_wires": 2.640360018934765
+        }
+      },
+      {
+        "level": 15,
+        "same_model_total_tb_excluding_C_I": 323.2962354417956,
+        "saved_tb": 10.33871712664642,
+        "saved_percent_total": 3.0988111548431156,
+        "saved_tb_by_disjoint_component": {
+          "results_and_envelopes": 6.8177707787435935,
+          "account_full_anchors": 2.12121553108634,
+          "transaction_wires": 1.3997308168164864
+        },
+        "encode_cpu_ratios_by_component": {
+          "results_and_envelopes": 26.064362721165445,
+          "account_full_anchors": 29.86907769534929,
+          "transaction_wires": 11.533714297234166
+        }
+      }
+    ],
+    "frame_candidates": [
+      {
+        "wire_raw_frame_target_bytes": 1048576,
+        "wire_zstd_level": 3,
+        "other_tested_components_zstd_level": 9,
+        "known_modeled_tb_excluding_C_I": 324.7463697173239,
+        "saved_tb": 8.888582851118125,
+        "saved_percent_total": 2.6641641658617035,
+        "disjoint_savings_tb": {
+          "results_and_envelopes": 5.596313773728909,
+          "account_full_anchors": 1.4868013312281836,
+          "transaction_wire_frames_including_directory": 1.8054677461610327
+        },
+        "sample_compressed_wire_read_ratio_by_year_range": [
+          1.0,
+          4.560658782011126
+        ],
+        "max_sample_compressed_frame_bytes": 554038
+      },
+      {
+        "wire_raw_frame_target_bytes": 1048576,
+        "wire_zstd_level": 9,
+        "other_tested_components_zstd_level": 9,
+        "known_modeled_tb_excluding_C_I": 323.45468903199037,
+        "saved_tb": 10.180263536451642,
+        "saved_percent_total": 3.0513180522844823,
+        "disjoint_savings_tb": {
+          "results_and_envelopes": 5.596313773728909,
+          "account_full_anchors": 1.4868013312281836,
+          "transaction_wire_frames_including_directory": 3.0971484314945497
+        },
+        "sample_compressed_wire_read_ratio_by_year_range": [
+          0.9849023324967011,
+          4.43557259485567
+        ],
+        "max_sample_compressed_frame_bytes": 533763
+      },
+      {
+        "wire_raw_frame_target_bytes": 4194304,
+        "wire_zstd_level": 3,
+        "other_tested_components_zstd_level": 9,
+        "known_modeled_tb_excluding_C_I": 305.3552332299636,
+        "saved_tb": 28.279719338478458,
+        "saved_percent_total": 8.476246005033643,
+        "disjoint_savings_tb": {
+          "results_and_envelopes": 5.596313773728909,
+          "account_full_anchors": 1.4868013312281836,
+          "transaction_wire_frames_including_directory": 21.196604233521366
+        },
+        "sample_compressed_wire_read_ratio_by_year_range": [
+          2.645108858763174,
+          5.189835908716318
+        ],
+        "max_sample_compressed_frame_bytes": 1255100
+      },
+      {
+        "wire_raw_frame_target_bytes": 4194304,
+        "wire_zstd_level": 9,
+        "other_tested_components_zstd_level": 9,
+        "known_modeled_tb_excluding_C_I": 300.8280563829,
+        "saved_tb": 32.806896185542016,
+        "saved_percent_total": 9.833171234902911,
+        "disjoint_savings_tb": {
+          "results_and_envelopes": 5.596313773728909,
+          "account_full_anchors": 1.4868013312281836,
+          "transaction_wire_frames_including_directory": 25.72378108058492
+        },
+        "sample_compressed_wire_read_ratio_by_year_range": [
+          2.48083375270863,
+          5.0459956645857185
+        ],
+        "max_sample_compressed_frame_bytes": 1151974
+      }
+    ],
+    "wire_samples": [
+      {
+        "year": 2020,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 86,
+        "frames": 10,
+        "payload_bytes": 1321279,
+        "directory_and_hash_bytes": 1555,
+        "combined_bytes": 1322834,
+        "baseline_payload_and_directory_bytes": 2004627,
+        "saving_bytes": 681793,
+        "encode_cpu_seconds": 0.027780171999999936,
+        "tx_weighted_compressed_read_ratio_to_original_block": 4.560658782011126,
+        "max_compressed_frame_bytes": 254888,
+        "max_raw_frame_bytes": 1027809,
+        "modeled_tb_saved_with_same_year_weights": 0.43151816615835215
+      },
+      {
+        "year": 2020,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 86,
+        "frames": 10,
+        "payload_bytes": 1286116,
+        "directory_and_hash_bytes": 1555,
+        "combined_bytes": 1287671,
+        "baseline_payload_and_directory_bytes": 2004627,
+        "saving_bytes": 716956,
+        "encode_cpu_seconds": 0.08321837099999999,
+        "tx_weighted_compressed_read_ratio_to_original_block": 4.43557259485567,
+        "max_compressed_frame_bytes": 248126,
+        "max_raw_frame_bytes": 1027809,
+        "modeled_tb_saved_with_same_year_weights": 0.4537734155912829
+      },
+      {
+        "year": 2020,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 86,
+        "frames": 9,
+        "payload_bytes": 1296154,
+        "directory_and_hash_bytes": 1505,
+        "combined_bytes": 1297659,
+        "baseline_payload_and_directory_bytes": 2004627,
+        "saving_bytes": 706968,
+        "encode_cpu_seconds": 0.016310252999999997,
+        "tx_weighted_compressed_read_ratio_to_original_block": 5.189835908716318,
+        "max_compressed_frame_bytes": 311781,
+        "max_raw_frame_bytes": 1286844,
+        "modeled_tb_saved_with_same_year_weights": 0.4474518437306307
+      },
+      {
+        "year": 2020,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 86,
+        "frames": 9,
+        "payload_bytes": 1260739,
+        "directory_and_hash_bytes": 1505,
+        "combined_bytes": 1262244,
+        "baseline_payload_and_directory_bytes": 2004627,
+        "saving_bytes": 742383,
+        "encode_cpu_seconds": 0.054511591000000026,
+        "tx_weighted_compressed_read_ratio_to_original_block": 5.0459956645857185,
+        "max_compressed_frame_bytes": 303365,
+        "max_raw_frame_bytes": 1286844,
+        "modeled_tb_saved_with_same_year_weights": 0.46986658816845567
+      },
+      {
+        "year": 2021,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 114,
+        "frames": 52,
+        "payload_bytes": 12766541,
+        "directory_and_hash_bytes": 3806,
+        "combined_bytes": 12770347,
+        "baseline_payload_and_directory_bytes": 14181933,
+        "saving_bytes": 1411586,
+        "encode_cpu_seconds": 0.21329053499999984,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.3965440180783293,
+        "max_compressed_frame_bytes": 406115,
+        "max_raw_frame_bytes": 1303703,
+        "modeled_tb_saved_with_same_year_weights": 0.5970747987381109
+      },
+      {
+        "year": 2021,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 114,
+        "frames": 52,
+        "payload_bytes": 12414611,
+        "directory_and_hash_bytes": 3805,
+        "combined_bytes": 12418416,
+        "baseline_payload_and_directory_bytes": 14181933,
+        "saving_bytes": 1763517,
+        "encode_cpu_seconds": 0.5783700650000007,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.35723741136242,
+        "max_compressed_frame_bytes": 388925,
+        "max_raw_frame_bytes": 1303703,
+        "modeled_tb_saved_with_same_year_weights": 0.745935109760395
+      },
+      {
+        "year": 2021,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 114,
+        "frames": 20,
+        "payload_bytes": 10798435,
+        "directory_and_hash_bytes": 2435,
+        "combined_bytes": 10800870,
+        "baseline_payload_and_directory_bytes": 14181933,
+        "saving_bytes": 3381063,
+        "encode_cpu_seconds": 0.13364952200000024,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.9030506092582926,
+        "max_compressed_frame_bytes": 1106654,
+        "max_raw_frame_bytes": 4122266,
+        "modeled_tb_saved_with_same_year_weights": 1.4301271833567868
+      },
+      {
+        "year": 2021,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 114,
+        "frames": 20,
+        "payload_bytes": 10257061,
+        "directory_and_hash_bytes": 2434,
+        "combined_bytes": 10259495,
+        "baseline_payload_and_directory_bytes": 14181933,
+        "saving_bytes": 3922438,
+        "encode_cpu_seconds": 0.5248185659999993,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.683359031027412,
+        "max_compressed_frame_bytes": 1017604,
+        "max_raw_frame_bytes": 4122266,
+        "modeled_tb_saved_with_same_year_weights": 1.6591188063729152
+      },
+      {
+        "year": 2022,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 117,
+        "frames": 101,
+        "payload_bytes": 30181368,
+        "directory_and_hash_bytes": 5928,
+        "combined_bytes": 30187296,
+        "baseline_payload_and_directory_bytes": 30550322,
+        "saving_bytes": 363026,
+        "encode_cpu_seconds": 0.40894281099999974,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0448543408912814,
+        "max_compressed_frame_bytes": 554038,
+        "max_raw_frame_bytes": 1794173,
+        "modeled_tb_saved_with_same_year_weights": 0.1609697235559693
+      },
+      {
+        "year": 2022,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 117,
+        "frames": 101,
+        "payload_bytes": 29530457,
+        "directory_and_hash_bytes": 5918,
+        "combined_bytes": 29536375,
+        "baseline_payload_and_directory_bytes": 30550322,
+        "saving_bytes": 1013947,
+        "encode_cpu_seconds": 1.0491921139999993,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0215836022488665,
+        "max_compressed_frame_bytes": 533763,
+        "max_raw_frame_bytes": 1794173,
+        "modeled_tb_saved_with_same_year_weights": 0.4495952584399035
+      },
+      {
+        "year": 2022,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 117,
+        "frames": 30,
+        "payload_bytes": 24131015,
+        "directory_and_hash_bytes": 2948,
+        "combined_bytes": 24133963,
+        "baseline_payload_and_directory_bytes": 30550322,
+        "saving_bytes": 6416359,
+        "encode_cpu_seconds": 0.2705723069999997,
+        "tx_weighted_compressed_read_ratio_to_original_block": 2.709763166206862,
+        "max_compressed_frame_bytes": 1125598,
+        "max_raw_frame_bytes": 4186197,
+        "modeled_tb_saved_with_same_year_weights": 2.8450841936000604
+      },
+      {
+        "year": 2022,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 117,
+        "frames": 30,
+        "payload_bytes": 22576094,
+        "directory_and_hash_bytes": 2949,
+        "combined_bytes": 22579043,
+        "baseline_payload_and_directory_bytes": 30550322,
+        "saving_bytes": 7971279,
+        "encode_cpu_seconds": 0.8634552609999977,
+        "tx_weighted_compressed_read_ratio_to_original_block": 2.5235711964061425,
+        "max_compressed_frame_bytes": 1029773,
+        "max_raw_frame_bytes": 4186197,
+        "modeled_tb_saved_with_same_year_weights": 3.53455283372955
+      },
+      {
+        "year": 2023,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 115,
+        "frames": 103,
+        "payload_bytes": 30712564,
+        "directory_and_hash_bytes": 5961,
+        "combined_bytes": 30718525,
+        "baseline_payload_and_directory_bytes": 31000581,
+        "saving_bytes": 282056,
+        "encode_cpu_seconds": 0.32876104000000606,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0337764452701586,
+        "max_compressed_frame_bytes": 524456,
+        "max_raw_frame_bytes": 1752187,
+        "modeled_tb_saved_with_same_year_weights": 0.15998443936584308
+      },
+      {
+        "year": 2023,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 115,
+        "frames": 103,
+        "payload_bytes": 30256398,
+        "directory_and_hash_bytes": 5961,
+        "combined_bytes": 30262359,
+        "baseline_payload_and_directory_bytes": 31000581,
+        "saving_bytes": 738222,
+        "encode_cpu_seconds": 0.9016271170000039,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0178582933639497,
+        "max_compressed_frame_bytes": 506726,
+        "max_raw_frame_bytes": 1752187,
+        "modeled_tb_saved_with_same_year_weights": 0.41872547578328917
+      },
+      {
+        "year": 2023,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 115,
+        "frames": 30,
+        "payload_bytes": 24706698,
+        "directory_and_hash_bytes": 2898,
+        "combined_bytes": 24709596,
+        "baseline_payload_and_directory_bytes": 31000581,
+        "saving_bytes": 6290985,
+        "encode_cpu_seconds": 0.2735347129999983,
+        "tx_weighted_compressed_read_ratio_to_original_block": 2.645108858763174,
+        "max_compressed_frame_bytes": 1136944,
+        "max_raw_frame_bytes": 4167292,
+        "modeled_tb_saved_with_same_year_weights": 3.56829745966733
+      },
+      {
+        "year": 2023,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 115,
+        "frames": 30,
+        "payload_bytes": 23269055,
+        "directory_and_hash_bytes": 2898,
+        "combined_bytes": 23271953,
+        "baseline_payload_and_directory_bytes": 31000581,
+        "saving_bytes": 7728628,
+        "encode_cpu_seconds": 0.9077682279999992,
+        "tx_weighted_compressed_read_ratio_to_original_block": 2.48083375270863,
+        "max_compressed_frame_bytes": 1028785,
+        "max_raw_frame_bytes": 4167292,
+        "modeled_tb_saved_with_same_year_weights": 4.383740170913425
+      },
+      {
+        "year": 2024,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 90,
+        "frames": 73,
+        "payload_bytes": 20567183,
+        "directory_and_hash_bytes": 4376,
+        "combined_bytes": 20571559,
+        "baseline_payload_and_directory_bytes": 21176858,
+        "saving_bytes": 605299,
+        "encode_cpu_seconds": 0.31936581099999906,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.114158905018248,
+        "max_compressed_frame_bytes": 406911,
+        "max_raw_frame_bytes": 1161472,
+        "modeled_tb_saved_with_same_year_weights": 0.4615210712609987
+      },
+      {
+        "year": 2024,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 90,
+        "frames": 73,
+        "payload_bytes": 20399489,
+        "directory_and_hash_bytes": 4376,
+        "combined_bytes": 20403865,
+        "baseline_payload_and_directory_bytes": 21176858,
+        "saving_bytes": 772993,
+        "encode_cpu_seconds": 0.7515230140000018,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.1053427032127845,
+        "max_compressed_frame_bytes": 402280,
+        "max_raw_frame_bytes": 1161472,
+        "modeled_tb_saved_with_same_year_weights": 0.5893823671231129
+      },
+      {
+        "year": 2024,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 90,
+        "frames": 18,
+        "payload_bytes": 16115855,
+        "directory_and_hash_bytes": 2059,
+        "combined_bytes": 16117914,
+        "baseline_payload_and_directory_bytes": 21176858,
+        "saving_bytes": 5058944,
+        "encode_cpu_seconds": 0.16890027900000248,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.7413679555379904,
+        "max_compressed_frame_bytes": 1255100,
+        "max_raw_frame_bytes": 4141400,
+        "modeled_tb_saved_with_same_year_weights": 3.857282523726955
+      },
+      {
+        "year": 2024,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 90,
+        "frames": 18,
+        "payload_bytes": 15153123,
+        "directory_and_hash_bytes": 2058,
+        "combined_bytes": 15155181,
+        "baseline_payload_and_directory_bytes": 21176858,
+        "saving_bytes": 6021677,
+        "encode_cpu_seconds": 0.5106576259999986,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.4997548098323574,
+        "max_compressed_frame_bytes": 1143200,
+        "max_raw_frame_bytes": 4141400,
+        "modeled_tb_saved_with_same_year_weights": 4.591335554540346
+      },
+      {
+        "year": 2025,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 10,
+        "frames": 10,
+        "payload_bytes": 3021892,
+        "directory_and_hash_bytes": 637,
+        "combined_bytes": 3022529,
+        "baseline_payload_and_directory_bytes": 3022125,
+        "saving_bytes": -404,
+        "encode_cpu_seconds": 0.061060660000000766,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0,
+        "max_compressed_frame_bytes": 387677,
+        "max_raw_frame_bytes": 997071,
+        "modeled_tb_saved_with_same_year_weights": -0.003194203107036926
+      },
+      {
+        "year": 2025,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 10,
+        "frames": 10,
+        "payload_bytes": 2998523,
+        "directory_and_hash_bytes": 637,
+        "combined_bytes": 2999160,
+        "baseline_payload_and_directory_bytes": 3022125,
+        "saving_bytes": 22965,
+        "encode_cpu_seconds": 0.08606569099999817,
+        "tx_weighted_compressed_read_ratio_to_original_block": 0.9925178909549934,
+        "max_compressed_frame_bytes": 384709,
+        "max_raw_frame_bytes": 997071,
+        "modeled_tb_saved_with_same_year_weights": 0.18157147117104705
+      },
+      {
+        "year": 2025,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 10,
+        "frames": 3,
+        "payload_bytes": 2426704,
+        "directory_and_hash_bytes": 339,
+        "combined_bytes": 2427043,
+        "baseline_payload_and_directory_bytes": 3022125,
+        "saving_bytes": 595082,
+        "encode_cpu_seconds": 0.025314508999997543,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.464580966513217,
+        "max_compressed_frame_bytes": 1174396,
+        "max_raw_frame_bytes": 3942672,
+        "modeled_tb_saved_with_same_year_weights": 4.704982112232049
+      },
+      {
+        "year": 2025,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 10,
+        "frames": 3,
+        "payload_bytes": 2287561,
+        "directory_and_hash_bytes": 334,
+        "combined_bytes": 2287895,
+        "baseline_payload_and_directory_bytes": 3022125,
+        "saving_bytes": 734230,
+        "encode_cpu_seconds": 0.07748822699999991,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.2565615748101004,
+        "max_compressed_frame_bytes": 1100741,
+        "max_raw_frame_bytes": 3942672,
+        "modeled_tb_saved_with_same_year_weights": 5.805147889306244
+      },
+      {
+        "year": 2026,
+        "target_raw_frame_bytes": 1048576,
+        "level": 3,
+        "blocks": 300,
+        "frames": 300,
+        "payload_bytes": 80322792,
+        "directory_and_hash_bytes": 16195,
+        "combined_bytes": 80338987,
+        "baseline_payload_and_directory_bytes": 80328037,
+        "saving_bytes": -10950,
+        "encode_cpu_seconds": 0.9923207809999894,
+        "tx_weighted_compressed_read_ratio_to_original_block": 1.0,
+        "max_compressed_frame_bytes": 501249,
+        "max_raw_frame_bytes": 2364240,
+        "modeled_tb_saved_with_same_year_weights": -0.0024062498112046413
+      },
+      {
+        "year": 2026,
+        "target_raw_frame_bytes": 1048576,
+        "level": 9,
+        "blocks": 300,
+        "frames": 300,
+        "payload_bytes": 79137028,
+        "directory_and_hash_bytes": 16189,
+        "combined_bytes": 79153217,
+        "baseline_payload_and_directory_bytes": 80328037,
+        "saving_bytes": 1174820,
+        "encode_cpu_seconds": 2.7503507770000066,
+        "tx_weighted_compressed_read_ratio_to_original_block": 0.9849023324967011,
+        "max_compressed_frame_bytes": 495132,
+        "max_raw_frame_bytes": 2364240,
+        "modeled_tb_saved_with_same_year_weights": 0.2581653336255193
+      },
+      {
+        "year": 2026,
+        "target_raw_frame_bytes": 4194304,
+        "level": 3,
+        "blocks": 300,
+        "frames": 71,
+        "payload_bytes": 60555652,
+        "directory_and_hash_bytes": 7189,
+        "combined_bytes": 60562841,
+        "baseline_payload_and_directory_bytes": 80328037,
+        "saving_bytes": 19765196,
+        "encode_cpu_seconds": 0.7010814269999948,
+        "tx_weighted_compressed_read_ratio_to_original_block": 3.2073699257082793,
+        "max_compressed_frame_bytes": 1224145,
+        "max_raw_frame_bytes": 4176885,
+        "modeled_tb_saved_with_same_year_weights": 4.343378917207555
+      },
+      {
+        "year": 2026,
+        "target_raw_frame_bytes": 4194304,
+        "level": 9,
+        "blocks": 300,
+        "frames": 71,
+        "payload_bytes": 56293329,
+        "directory_and_hash_bytes": 7190,
+        "combined_bytes": 56300519,
+        "baseline_payload_and_directory_bytes": 80328037,
+        "saving_bytes": 24027518,
+        "encode_cpu_seconds": 2.0847599990000028,
+        "tx_weighted_compressed_read_ratio_to_original_block": 2.978663553980009,
+        "max_compressed_frame_bytes": 1151974,
+        "max_raw_frame_bytes": 4176885,
+        "modeled_tb_saved_with_same_year_weights": 5.280019237553984
+      }
+    ],
+    "decode_checks": {
+      "counts": {
+        "blocks": 832,
+        "transactions": 1108616,
+        "queries": 8320
+      },
+      "decode_extract_cpu_ms": {
+        "original_block": {
+          "n": 4160,
+          "p50": 0.189701,
+          "p90": 0.30918,
+          "max": 0.629571
+        },
+        "frame_4m_level9": {
+          "n": 4160,
+          "p50": 0.8595459999999999,
+          "p90": 1.096706,
+          "max": 2.835908
+        }
+      },
+      "all_exact": true
+    },
+    "native_correction_tb": null,
+    "bootstrap_index_tb": null
+  },
+  "get": {
+    "verified_requests": 18354,
+    "distinct_targets": 57,
+    "logical_cpu_ceiling": 8,
+    "memory_gib_ceiling": 8,
+    "load": [
+      {
+        "cache_condition": "warm",
+        "readers": 4,
+        "offered_rps": 1,
+        "offered": 1080,
+        "verified_completed": 1080,
+        "queue_rejections": 0,
+        "completion_rps": 0.9990651949074845,
+        "arrival_to_completion_seconds": {
+          "n": 1080,
+          "mean": 0.6880370243728436,
+          "p50": 0.2648143209517002,
+          "p90": 1.8082886040210724,
+          "p99": 2.988335732370615,
+          "max": 4.977292165160179
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 2.722018732930775,
+            "percent_of_arrival_mean": 0.39562096755068343
+          },
+          "fresh_native_process_and_output": {
+            "ms": 480.55509489926476,
+            "percent_of_arrival_mean": 69.84436561932087
+          },
+          "input_assembly_and_identity": {
+            "ms": 96.52592119312396,
+            "percent_of_arrival_mean": 14.029175432980345
+          },
+          "native_input_serialize": {
+            "ms": 66.08829017107685,
+            "percent_of_arrival_mean": 9.605339223033434
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.15461944664518038,
+            "percent_of_arrival_mean": 0.022472547431022102
+          },
+          "original_results_and_expected_state": {
+            "ms": 22.218577387846178,
+            "percent_of_arrival_mean": 3.2292706062001173
+          },
+          "signature_wire": {
+            "ms": 5.4751903163614095,
+            "percent_of_arrival_mean": 0.7957697220367074
+          },
+          "queue": {
+            "ms": 10.029172048800522,
+            "percent_of_arrival_mean": 1.4576500527631149
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 4.268140176794,
+            "percent_of_arrival_mean": 0.6203358286837072
+          }
+        },
+        "cohort_distinct_targets": 57
+      },
+      {
+        "cache_condition": "warm",
+        "readers": 4,
+        "offered_rps": 4,
+        "offered": 4320,
+        "verified_completed": 4320,
+        "queue_rejections": 0,
+        "completion_rps": 3.9969812372691553,
+        "arrival_to_completion_seconds": {
+          "n": 4320,
+          "mean": 0.6726226337495501,
+          "p50": 0.26867177337408066,
+          "p90": 1.7692161239683628,
+          "p99": 2.9338585920631886,
+          "max": 3.6650559082627296
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 1.9605152834965673,
+            "percent_of_arrival_mean": 0.2914732845916335
+          },
+          "fresh_native_process_and_output": {
+            "ms": 467.9019372254886,
+            "percent_of_arrival_mean": 69.56381093171942
+          },
+          "input_assembly_and_identity": {
+            "ms": 77.17943722382188,
+            "percent_of_arrival_mean": 11.474403826345146
+          },
+          "native_input_serialize": {
+            "ms": 63.778329107703435,
+            "percent_of_arrival_mean": 9.482037312983314
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.14750012627768294,
+            "percent_of_arrival_mean": 0.02192910539680179
+          },
+          "original_results_and_expected_state": {
+            "ms": 20.000530501689624,
+            "percent_of_arrival_mean": 2.973514344915248
+          },
+          "signature_wire": {
+            "ms": 3.937107949793615,
+            "percent_of_arrival_mean": 0.5853368222009
+          },
+          "queue": {
+            "ms": 33.30579590983689,
+            "percent_of_arrival_mean": 4.9516317528854135
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 4.4114804214417935,
+            "percent_of_arrival_mean": 0.6558626189621208
+          }
+        },
+        "cohort_distinct_targets": 57
+      },
+      {
+        "cache_condition": "warm",
+        "readers": 4,
+        "offered_rps": 8,
+        "offered": 8640,
+        "verified_completed": 7030,
+        "queue_rejections": 1610,
+        "completion_rps": 6.487971917220132,
+        "arrival_to_completion_seconds": {
+          "n": 7030,
+          "mean": 4.530744992668713,
+          "p50": 4.415349578484893,
+          "p90": 6.177765034139156,
+          "p99": 7.854004044085741,
+          "max": 10.0746567286551
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 1.9934617947379012,
+            "percent_of_arrival_mean": 0.04399854324098047
+          },
+          "fresh_native_process_and_output": {
+            "ms": 466.26481346648245,
+            "percent_of_arrival_mean": 10.29112903553289
+          },
+          "input_assembly_and_identity": {
+            "ms": 60.58330671122539,
+            "percent_of_arrival_mean": 1.3371599330630266
+          },
+          "native_input_serialize": {
+            "ms": 62.20514782907105,
+            "percent_of_arrival_mean": 1.372956278266078
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.145277101149091,
+            "percent_of_arrival_mean": 0.0032064726967456067
+          },
+          "original_results_and_expected_state": {
+            "ms": 17.638940890856183,
+            "percent_of_arrival_mean": 0.3893165675710749
+          },
+          "signature_wire": {
+            "ms": 2.7064089113541723,
+            "percent_of_arrival_mean": 0.059734302321880074
+          },
+          "queue": {
+            "ms": 3915.048274343269,
+            "percent_of_arrival_mean": 86.41069582769026
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 4.159361620567736,
+            "percent_of_arrival_mean": 0.09180303961706256
+          }
+        },
+        "cohort_distinct_targets": 57
+      },
+      {
+        "cache_condition": "advised-cold",
+        "readers": 4,
+        "offered_rps": 1,
+        "offered": 600,
+        "verified_completed": 600,
+        "queue_rejections": 0,
+        "completion_rps": 0.995918556305593,
+        "arrival_to_completion_seconds": {
+          "n": 600,
+          "mean": 2.310758193532626,
+          "p50": 1.9170503597706556,
+          "p90": 4.708229333162308,
+          "p99": 7.537498351186514,
+          "max": 8.763746157288551
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 1.852984788517157,
+            "percent_of_arrival_mean": 0.0801894717371688
+          },
+          "fresh_native_process_and_output": {
+            "ms": 464.4046779535711,
+            "percent_of_arrival_mean": 20.097502164153383
+          },
+          "input_assembly_and_identity": {
+            "ms": 1418.2767396544416,
+            "percent_of_arrival_mean": 61.3771161181611
+          },
+          "native_input_serialize": {
+            "ms": 85.82588523005445,
+            "percent_of_arrival_mean": 3.7141872079157756
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.15489356592297554,
+            "percent_of_arrival_mean": 0.006703149051099042
+          },
+          "original_results_and_expected_state": {
+            "ms": 127.42917239045104,
+            "percent_of_arrival_mean": 5.51460437301926
+          },
+          "signature_wire": {
+            "ms": 83.05341005325317,
+            "percent_of_arrival_mean": 3.5942060179946096
+          },
+          "queue": {
+            "ms": 124.31590301916003,
+            "percent_of_arrival_mean": 5.37987502833904
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 5.444526877254496,
+            "percent_of_arrival_mean": 0.2356164696285702
+          }
+        },
+        "cohort_distinct_targets": 57
+      },
+      {
+        "cache_condition": "advised-cold",
+        "readers": 4,
+        "offered_rps": 4,
+        "offered": 2400,
+        "verified_completed": 1484,
+        "queue_rejections": 916,
+        "completion_rps": 2.420255500243285,
+        "arrival_to_completion_seconds": {
+          "n": 1484,
+          "mean": 12.365351066653519,
+          "p50": 10.915416449308395,
+          "p90": 20.457915008068085,
+          "p99": 26.961414400488138,
+          "max": 29.285782530903816
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 1.9169130696440644,
+            "percent_of_arrival_mean": 0.015502293944678478
+          },
+          "fresh_native_process_and_output": {
+            "ms": 470.1293908822729,
+            "percent_of_arrival_mean": 3.801989837151512
+          },
+          "input_assembly_and_identity": {
+            "ms": 915.8433957447139,
+            "percent_of_arrival_mean": 7.406529671563722
+          },
+          "native_input_serialize": {
+            "ms": 84.60447073956786,
+            "percent_of_arrival_mean": 0.6842059742867024
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.15123204561577974,
+            "percent_of_arrival_mean": 0.0012230307477772908
+          },
+          "original_results_and_expected_state": {
+            "ms": 104.73033858618808,
+            "percent_of_arrival_mean": 0.8469661558467312
+          },
+          "signature_wire": {
+            "ms": 64.75811315113,
+            "percent_of_arrival_mean": 0.5237062239645391
+          },
+          "queue": {
+            "ms": 10718.070893651351,
+            "percent_of_arrival_mean": 86.67825794736633
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 5.146318783035397,
+            "percent_of_arrival_mean": 0.041618865128009386
+          }
+        },
+        "cohort_distinct_targets": 57
+      },
+      {
+        "cache_condition": "warm",
+        "readers": 8,
+        "offered_rps": 8,
+        "offered": 3840,
+        "verified_completed": 3840,
+        "queue_rejections": 0,
+        "completion_rps": 7.963626562121642,
+        "arrival_to_completion_seconds": {
+          "n": 3840,
+          "mean": 0.6515357240694963,
+          "p50": 0.24590412341058254,
+          "p90": 1.7639407366514206,
+          "p99": 2.939529236406088,
+          "max": 5.136743117123842
+        },
+        "mean_factors": {
+          "durable_receipt": {
+            "ms": 1.6173930120809625,
+            "percent_of_arrival_mean": 0.24824318181338015
+          },
+          "fresh_native_process_and_output": {
+            "ms": 461.17096473559894,
+            "percent_of_arrival_mean": 70.7821455829194
+          },
+          "input_assembly_and_identity": {
+            "ms": 74.07497789633149,
+            "percent_of_arrival_mean": 11.369288768029282
+          },
+          "native_input_serialize": {
+            "ms": 61.98756134738991,
+            "percent_of_arrival_mean": 9.514069460415033
+          },
+          "original_and_full_state_verification": {
+            "ms": 0.1326362262868012,
+            "percent_of_arrival_mean": 0.020357475635925912
+          },
+          "original_results_and_expected_state": {
+            "ms": 19.01797591514575,
+            "percent_of_arrival_mean": 2.9189459936838693
+          },
+          "signature_wire": {
+            "ms": 4.240465146722272,
+            "percent_of_arrival_mean": 0.6508415410035077
+          },
+          "queue": {
+            "ms": 25.139522458387848,
+            "percent_of_arrival_mean": 3.8585025394104613
+          },
+          "unclassified_wrapper_cleanup": {
+            "ms": 4.1542273315523515,
+            "percent_of_arrival_mean": 0.6376054570891402
+          }
+        },
+        "cohort_distinct_targets": 57
+      }
+    ],
+    "closed_batch_control": [
+      {
+        "readers": 1,
+        "verified_requests": 171,
+        "service_seconds": {
+          "n": 171,
+          "mean": 1.6359841156729131,
+          "p50": 1.013189110904932,
+          "p90": 3.8431024365127087,
+          "p99": 6.256434794515371,
+          "max": 8.145262736827135
+        }
+      },
+      {
+        "readers": 4,
+        "verified_requests": 171,
+        "service_seconds": {
+          "n": 171,
+          "mean": 1.3543425099542963,
+          "p50": 1.0619851611554623,
+          "p90": 2.6598096042871475,
+          "p99": 4.262260723859072,
+          "max": 4.338816624134779
+        }
+      }
+    ]
+  },
+  "native_correctness": {
+    "attempted": 2305,
+    "exact": 2305,
+    "failed": 0
+  },
+  "source_sha256": {
+    "load-summary.json": "37754a23236ad0103c954119d1a7c73f360c58f8a6fca7fd18ff2b6bda96905a",
+    "frame-reconciliation.json": "c6689ed8fd53d8c6e6a509c9ccd7125b29a708115b2927bef1d8dea1058b1c49",
+    "reconciled-updates.json": "a389463ddac7c31249509416549dc20650870eb19e715554c70c8cefed1aae62",
+    "get-closed-control/report.json": "c4f6ca0a1df49263b1ed43e34622c7910f6a8edbd195e34fb6408f08f2a1dc28",
+    "native-expanded-summary.json": "76fb9038d369256c54f61e875adf6aac40a30a3688760710dc9905349046d962",
+    "wire-frame-lookup.json": "fc84a7831aa545c2bc2408b805a6e27716d2f6b428564f6a11d84b08ccccf8fe",
+    "wire-frame-audit.json": "f21958bf75d996f5496655eb3fc364b87621a77e991c719502f71a8084488b96",
+    "compression_frontier.py": "0667eab1623a42df581d146a505d750f51d9bd865da1e2f71798c21feca2223f",
+    "anchor_compression.py": "2a3ce4837d3765d7a1153304e10263054ed3b4416bfaa4ea089209d1ae765404",
+    "wire_compression.py": "b337af30cf2790f4cc23d1d9567efb196a28b561cf713e4cca40fc5660c7d07d",
+    "wire_frame_audit.py": "2a08e82f0782d202530948d2d8fe20001ed6173328cba9acb4a0ead088c8b60a",
+    "wire_frame_lookup.py": "5405f5201c96594b022eee2c7d23fe67e6b24dccedeb874a9c7a5b0aef4810ef",
+    "frame_reconciliation.py": "8ec2891e601044c8f9c8c587d461481a9b7b6f7b2b1e2b73d6795c5cdd0b3dc6"
+  }
+}
