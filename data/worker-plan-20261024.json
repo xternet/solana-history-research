@@ -92,7 +92,17 @@
       "monthly_price": "1531.48",
       "annual_price": "18377.76",
       "outgoing_tb_month": 250,
-      "network_port": "2x10G"
+      "network_port": "2x10G",
+      "display_price": {
+        "currency": "USD",
+        "approximate": true,
+        "eur_usd": "1.1193",
+        "fx_date": "2026-10-23",
+        "monthly_exact": "1714.185564",
+        "annual_exact": "20570.226768",
+        "monthly_rounded": "1714",
+        "annual_rounded": "20570"
+      }
     },
     {
       "provider": "WebNX",

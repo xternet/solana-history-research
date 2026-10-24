@@ -72,7 +72,7 @@ One dedicated machine per row; these are planned configurations, not deployed ho
 |---|---|---|---|---|---|---|
 | TeraSwitch, Frankfurt | Head | EPYC 9354: 32C/64T; 512 GB DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 |
 | TeraSwitch, Newark | Head | EPYC 9354: 32C/64T; 512 GB DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 (estimate) |
-| Dataforest, Frankfurt | Storage | EPYC 7713: 64C/128T; 512 GB DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | €1,531.48; €18,377.76 |
+| Dataforest, Frankfurt | Storage | EPYC 7713: 64C/128T; 512 GB DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | ≈$1,714; ≈$20,570 |
 | WebNX, Ogden | Storage | 2x Xeon Bronze 3106: 16C/16T total; 384 GB DDR4 | 60x18 TB HDD; 480 GB SSD boot | 500 TB; 10 Gbps | 0–1 | $1,851; $22,212 |
 
 Own cluster: **8 workers**; estimated backfill total **22–32**, excluding WebNX.
@@ -88,6 +88,8 @@ older low-clock CPUs and **no quoted NVMe scratch**. Its 0–1 estimate is a CPU
 possibility only; **zero WebNX replay workers are counted toward completion**.
 Dataforest supplies the materially stronger shared storage/compute configuration.
 The [worker plan](../data/worker-plan-20261024.json) records the arithmetic and assumptions.
+Dataforest's USD figures use the planning rate €1 = $1.1193 (October 23, 2026);
+the original quote remains €1,531.48/month, excluding tax.
 
 The head boot pair provides approximately 960 GB mirrored space, not 1.92 TB
 of independent data storage; accounts and ledger use separate NVMe drives.

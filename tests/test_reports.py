@@ -116,7 +116,7 @@ class ReportTests(unittest.TestCase):
                        "Newark price/stock require confirmation", "2x960 GB RAID1 boot",
                        "2x3.84 TB NVMe", "150 TB/month outgoing"):
             self.assertIn(phrase, text)
-        for phrase in ("4–8", "6–8", "0–1", "$11,040", "€18,377.76", "$22,212",
+        for phrase in ("4–8", "6–8", "0–1", "$11,040", "≈$20,570", "$22,212",
                        "22–32", "no quoted NVMe scratch"):
             self.assertIn(phrase, text)
 
