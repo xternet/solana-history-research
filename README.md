@@ -17,7 +17,9 @@ transactions or reproduce the larger benchmarks.
 | [Benchmarks](docs/benchmarks.md) | STORAGE, GET and SET tables; measured versus projected values |
 | [Test hardware](docs/test-environment.md) | Actual CPU, RAM, disks, worker limits and cache conditions |
 | [Architecture](docs/architecture.md) | Snapshots, archived blocks, per-change capture, indexes and serving |
-| [Architecture figures](docs/diagrams/README.md) | Backfill and after-backfill diagrams; editable draw.io PNGs |
+| [2027 capacity plan](docs/capacity-plan.md) | Two complete EU/US copies, calendar growth and traffic limits |
+| [Architecture figures](docs/diagrams/README.md) | Backfill and continuous capture; editable draw.io PNGs |
+| [Tool integrations](docs/integrations.md) | SVM Replay 0.2.0 and submitted Surfpool, Studio, Anchor and documentation PRs |
 | [Data contract](docs/data-contract.md) | What must be retained and which gaps remain |
 | [RPC scope](docs/rpc-scope.md) | The planned historical query surface and exact counting rules |
 | [Reproduction](docs/reproduction.md) | Run the small example and regenerate the tables |
@@ -61,18 +63,22 @@ historical storage estimates.
 ### Backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-research-Page-2.drawio.png" alt="Backfill: workers get ledger data and starting snapshots, set history on both archives, and the archives set the full-history replica." />
+  <img src="docs/diagrams/solana-historical-backfill.drawio.png" alt="GET fetches inputs for workers on our cluster, heads and storage hosts; SET writes both EU and US copies." />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
+<p align="center"><sub>Verified writes to both copies. Worker counts are indicative.</sub></p>
+
 ### After backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-research-Page-1.drawio.png" alt="After backfill: users get history from the archives; Head Capture sets the Active Archive, which sets the replica." />
+  <img src="docs/diagrams/solana-historical-live.drawio.png" alt="EU and US heads capture finalized Solana updates; SET writes both copies and user GET goes through the API or download service." />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
+
+<p align="center"><sub>Independent heads update both copies; GET uses the API or download service.</sub></p>
 
 [Backfill and after-backfill views](docs/diagrams/README.md).
 These figures describe the planned production backend, not the small offline demo.
@@ -80,6 +86,14 @@ These figures describe the planned production backend, not the small offline dem
 The selected design uses immutable compressed history, bounded RocksDB ingestion
 overlays, PostgreSQL service metadata, HDD capacity and bounded NVMe/RAM caches.
 The choice is based on small local comparisons, not a universal database ranking.
+The updated plan uses one complete Dataforest copy in Frankfurt and one complete
+WebNX replica in Ogden, plus TeraSwitch heads in Frankfurt and Newark. Spare
+head compute first helps backfill; heads switch to capture before the final join.
+Qualified storage compute also helps; WebNX is not counted for replay without NVMe scratch. Each producer
+writes directly to both copies; neither site is a mandatory relay for the other.
+These remain planned deployments, not currently operating services.
+The [planned-machine table](docs/architecture.md#planned-machines) lists CPU,
+RAM, drives and the worker-allocation policy for all four rented hosts.
 
 ## What this does not prove
 

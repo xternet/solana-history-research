@@ -1,3 +1,4 @@
+from hashlib import sha256
 import json
 import ipaddress
 from pathlib import Path
@@ -106,6 +107,19 @@ class ReportTests(unittest.TestCase):
             re.search(r"local review draft|owner approval|publication awaits", text, re.I)
         )
 
+    def test_planned_hosts_distinguish_cores_threads_and_worker_capacity(self):
+        text = (ROOT / "docs/architecture.md").read_text()
+        self.assertEqual(text.count("EPYC 9354: 32C/64T"), 2)
+        self.assertEqual(text.count("512 GB DDR5"), 2)
+        for phrase in ("EPYC 7713: 64C/128T", "16C/16T total", "Own cluster: **8 workers**",
+                       "Estimates, not benchmarks", "$920/month each",
+                       "Newark price/stock require confirmation", "2x960 GB RAID1 boot",
+                       "2x3.84 TB NVMe", "150 TB/month outgoing"):
+            self.assertIn(phrase, text)
+        for phrase in ("4–8", "6–8", "0–1", "$11,040", "€18,377.76", "$22,212",
+                       "22–32", "no quoted NVMe scratch"):
+            self.assertIn(phrase, text)
+
     def test_storage_sum_and_unknowns_are_explicit(self):
         data = self.data["storage"]
         self.assertAlmostEqual(
@@ -163,7 +177,7 @@ class ReportTests(unittest.TestCase):
                     privacy_issues(public_file_text(path)), [], str(path.relative_to(ROOT))
                 )
 
-    def test_architecture_uses_owner_drawio_exports(self):
+    def test_architecture_preserves_original_owner_drawio_exports(self):
         for page, phase in ((2, "Backfill"), (1, "After backfill")):
             name = f"solana-historical-research-Page-{page}.drawio.png"
             png = ROOT / "docs/diagrams" / name
@@ -180,13 +194,69 @@ class ReportTests(unittest.TestCase):
             width, height = struct.unpack_from(">II", png.read_bytes(), 16)
             self.assertGreaterEqual(width, 400)
             self.assertGreaterEqual(height, 300)
-            for doc in (
-                ROOT / "README.md",
-                ROOT / "docs/architecture.md",
-                ROOT / "docs/diagrams/README.md",
-            ):
-                self.assertIn(name, doc.read_text(), f"Missing {phase} image in {doc.name}")
         self.assertIn("Architecture & how it works", (ROOT / "docs/diagrams/README.md").read_text())
+
+    def test_preserved_mermaid_exports_remain_source_bound(self):
+        for name in ("backfill-2027", "capture-access-2027"):
+            folder = ROOT / "docs/diagrams"
+            source = (folder / (name + ".mmd")).read_bytes()
+            svg = ElementTree.fromstring((folder / (name + ".svg")).read_bytes())
+            self.assertEqual(svg.get("data-source-sha256"), sha256(source).hexdigest())
+            self.assertIn("Dataforest", source.decode())
+            self.assertIn("WebNX", source.decode())
+            width, height = struct.unpack_from(">II", (folder / (name + ".png")).read_bytes(), 16)
+            self.assertGreaterEqual(width, 400)
+            self.assertGreaterEqual(height, 300)
+            self.assertIn(name + ".svg", (folder / "README.md").read_text())
+
+    def test_active_owner_drawio_exports_keep_read_write_labels(self):
+        folder = ROOT / "docs/diagrams"
+        for name, required in (
+            ("solana-historical-backfill.drawio.png", ("Workers", "Ledger", "Snapshots")),
+            ("solana-historical-live.drawio.png", ("Finalized", "Head", "Storage")),
+        ):
+            path = folder / name
+            tree = ElementTree.fromstring(public_file_text(path))
+            labels = " ".join(cell.get("value", "") for cell in tree.iter("mxCell"))
+            for label in ("GET", "SET", *required):
+                self.assertIn(label, labels)
+            width, height = struct.unpack_from(">II", path.read_bytes(), 16)
+            self.assertGreaterEqual(width, 700)
+            self.assertGreaterEqual(height, 90)
+            for doc in (ROOT / "README.md", ROOT / "docs/architecture.md", folder / "README.md"):
+                self.assertIn(name, doc.read_text())
+        for doc in (ROOT / "README.md", ROOT / "docs/architecture.md", folder / "README.md"):
+            text = doc.read_text()
+            self.assertIn("Worker counts are indicative", text)
+            self.assertIn("API or download service", text)
+
+    def test_new_capacity_plan_keeps_two_independent_full_copies(self):
+        data = json.loads((ROOT / "data/capacity-20261024.json").read_text())
+        for row in data["layouts"].values():
+            self.assertEqual(row["raw_tb"], row["raid_groups"] * row["disks_per_group"] * row["disk_tb"])
+            post = row["raid_groups"] * (row["disks_per_group"] - 2) * row["disk_tb"]
+            self.assertEqual(row["post_parity_tb"], post)
+            self.assertEqual(row["data_envelope_10pct_free_tb"], post * .9)
+            self.assertGreater(row["data_envelope_10pct_free_tb"],
+                               data["scenarios"]["stress"]["end2027_with_allowances_tb"])
+        for row in data["scenarios"].values():
+            known = data["history_through_2025_tb"] + data["reference_2025_tb"] * (
+                row["rate_2026"] + row["rate_2027"])
+            self.assertEqual(known, row["known_end2027_tb"])
+            self.assertEqual(known * (1 + row["extra_fraction"]) + row["working_tb"],
+                             row["end2027_with_allowances_tb"])
+
+    def test_diagrams_show_storage_workers_and_direct_dual_writes(self):
+        folder = ROOT / "docs/diagrams"
+        backfill = (folder / "backfill-2027.mmd").read_text()
+        self.assertIn('storage("Storage hosts")', backfill)
+        for destination in ("eu", "us"):
+            self.assertIn("workers --> " + destination, backfill)
+        self.assertNotIn("eu --> us", backfill)
+        capture = (folder / "capture-access-2027.mmd").read_text()
+        for destination in ("eu", "us"):
+            self.assertIn("verify --> " + destination, capture)
+        self.assertNotIn("eu --> us", capture)
 
     def test_drawio_metadata_is_scanned_for_private_identifiers(self):
         original = (
@@ -220,15 +290,15 @@ class ReportTests(unittest.TestCase):
                 doc.read_text(),
             )
             self.assertEqual(len(blocks), 2, doc.name)
-            for (source, caption), (page, title) in zip(
+            for (source, caption), (name, title) in zip(
                 blocks,
                 (
-                    (2, "Figure 1 — Historical backfill"),
-                    (1, "Figure 2 — Continuous sync and historical access"),
+                    ("solana-historical-backfill.drawio.png", "Figure 1 — Historical backfill"),
+                    ("solana-historical-live.drawio.png", "Figure 2 — Continuous sync and historical access"),
                 ),
             ):
                 self.assertEqual(
-                    Path(source).name, f"solana-historical-research-Page-{page}.drawio.png"
+                    Path(source).name, name
                 )
                 self.assertEqual(caption, title)
 

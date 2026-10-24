@@ -1,0 +1,76 @@
+{
+  "schema": "solana-history-capacity/v2",
+  "as_of": "2026-10-24",
+  "status": "Planning scenarios, not measured full-history storage or upper bounds",
+  "units": "decimal TB; one complete copy at each site",
+  "history_through_2025_tb": 268.251316796141,
+  "reference_2025_tb": 88.87788081696429,
+  "annual_history_including_query_indexes_tb": {
+    "2020": 4.4875769672839905,
+    "2021": 19.707262895247204,
+    "2022": 42.779749346576196,
+    "2023": 54.29344956049277,
+    "2024": 57.99156556603553,
+    "2025": 88.87788081696429,
+    "2026": 65.38363577230099
+  },
+  "layouts": {
+    "eu_dataforest": {
+      "raw_tb": 1008,
+      "raid_groups": 2,
+      "disks_per_group": 18,
+      "disk_tb": 28,
+      "post_parity_tb": 896,
+      "data_envelope_10pct_free_tb": 806.4,
+      "stress_headroom_tb": 158.5061014984724
+    },
+    "us_webnx": {
+      "raw_tb": 1080,
+      "raid_groups": 5,
+      "disks_per_group": 12,
+      "disk_tb": 18,
+      "post_parity_tb": 900,
+      "data_envelope_10pct_free_tb": 810.0,
+      "stress_headroom_tb": 162.1061014984724
+    }
+  },
+  "scenarios": {
+    "flat": {
+      "known_end2027_tb": 446.00707843006955,
+      "end2027_with_allowances_tb": 500.60778627307656,
+      "rate_2026": 1,
+      "rate_2027": 1,
+      "extra_fraction": 0.1,
+      "working_tb": 10
+    },
+    "planning": {
+      "known_end2027_tb": 468.2265486343107,
+      "end2027_with_allowances_tb": 525.0492034977418,
+      "rate_2026": 1,
+      "rate_2027": 1.25,
+      "extra_fraction": 0.1,
+      "working_tb": 10
+    },
+    "stress": {
+      "known_end2027_tb": 545.9946943491544,
+      "end2027_with_allowances_tb": 647.8938985015276,
+      "rate_2026": 1.25,
+      "rate_2027": 1.875,
+      "extra_fraction": 0.15,
+      "working_tb": 20
+    }
+  },
+  "assumptions": [
+    "New compression candidates are not credited.",
+    "10/15% and 10/20 TB are explicit planning allowances, not measurements.",
+    "Filesystem overhead reduces the calculated disk envelope.",
+    "Double parity and 10% free reserve are applied separately.",
+    "No third storage machine is planned in the funded year; reforecast monthly."
+  ],
+  "source_sha256": {
+    "baseline": "335e5d5fe757f85e9b0d0d5624d36c3c5beec3091bde43a56b96e20b9ca21c4f",
+    "activity": "823a041956d1f07428ddfd9ea11700571225e3cf997bec574351b869c2239211",
+    "query": "ce3db3d4e41fcb63baefd9df3ce1ba396e27e7e0dbb5564baa0caeab05ed1136",
+    "published": "4cabcbd915aa2967a237534b6810504fe214fc0e7d38dda357f222e71f35f432"
+  }
+}

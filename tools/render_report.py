@@ -286,6 +286,10 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "These results update the earlier research, not a production guarantee. "
         "The native cohort remains current-era; no full-history run is implied.",
         "",
+        "**Deployment update, October 24:** the [capacity plan](capacity-plan.md) now uses "
+        "a full EU primary and full US replica, plus two geographic heads. "
+        "The measurements below have not been rerun or relabelled as production results.",
+        "",
         "## STORAGE",
         "",
         "One logical copy; same historical activity weights. Codec/frame substitutions "
@@ -329,19 +333,17 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "",
         "### Capacity",
         "",
-        "Planned primary capacity: 2 × (14 − 2 parity disks) × 22 TB × 80% = **422.4 TB**, "
-        "before filesystem/checkpoint/scratch overhead. A 24 × 26 TB replica gives "
-        "457.6 TB with one RAID6 group, or 416.0 TB with two 12-disk RAID6 groups.",
+        "Updated EU envelope: 2 × (18 − 2) × 28 TB × 90% = **806.4 TB**. "
+        "Updated US envelope: 5 × (12 − 2) × 18 TB × 90% = **810 TB**. "
+        "These are two complete copies, before filesystem overhead, not pooled storage. "
+        "The [2027 capacity plan](capacity-plan.md) replaces the former SX295/Artnet layout.",
         "",
     ]
-    annual = baseline["storage"]["modeled_reference_year_tb"]
-    months = (422.4 - storage["baseline_tb"]) / annual * 12
     lines += [
-        f"At the {annual:.3f} TB/year reference rate, primary capacity lasts approximately "
-        f"{months:.1f} additional months from the model cutoff, even before C + I. "
-        "This is capacity arithmetic, not a network-growth forecast. Monitor primary and "
-        "replica separately and budget expansion; the current pair does not establish "
-        "three years of growth.",
+        "The recomputed central end-2027 scenario is about 525 TB per copy; the stress "
+        "scenario is about 648 TB, including declared planning allowances. Neither is a "
+        "measured full-history bound. Reforecast monthly and obtain approval before "
+        "approaching 10% free capacity; no mid-year expansion server is assumed.",
         "",
         "## GET",
         "",
@@ -397,7 +399,7 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "|---|---|",
         f"| Compute-side model | {baseline['set']['compute_side_stage_days']:.1f} stage-days |",
         f"| Serial model including fetch | {baseline['set']['serial_stage_days']:.1f} stage-days |",
-        "| Worker allocations | Four per SX295 / two per AX102 are unvalidated planning allocations |",
+        "| Worker allocations | Existing eight workers plus qualified spare storage/head compute; no fixed density promised |",
         "| Parallel starts | Require verified range-start snapshots and matching boundary states |",
         "| Next qualification | Source → replay/capture → compression/index → remote durable HDD write → replica acknowledgement |",
         "",
@@ -417,7 +419,8 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "complete startup inventory and a clean lifecycle still need implementation.",
         "* Qualify same-slot program upgrades, parent ProgramData use, epoch/reward transitions "
         "and the full native-runtime suite at matching source pins.",
-        "* Treat the independent replica as tested recovery storage, not demonstrated hot failover.",
+        "* Qualify the planned manual, rate-limited warm standby and failback; current recovery "
+        "tests do not demonstrate hot failover or redundant head capture.",
         "* Pointer database comparisons have different cache/protocol conditions and do not "
         "establish a universal minimum-size or fastest database.",
         "",

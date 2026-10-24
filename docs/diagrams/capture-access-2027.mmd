@@ -1,0 +1,19 @@
+flowchart LR
+    he("EU head<br/>Frankfurt")
+    hu("US head<br/>Newark")
+    verify("Verify + seal")
+    eu("EU primary<br/>Dataforest")
+    us("US replica<br/>WebNX")
+    tools("Open API<br/>Developer tools")
+    he --> verify
+    hu --> verify
+    verify --> eu
+    verify --> us
+    eu --> tools
+    us --> tools
+    classDef head fill:#f8fafc,stroke:#94a3b8,color:#0f172a
+    classDef store fill:#f0fdfa,stroke:#5baaa0,color:#0f172a
+    classDef client fill:#eff6ff,stroke:#6c9ed0,color:#0f172a
+    class he,hu,verify head
+    class eu,us store
+    class tools client

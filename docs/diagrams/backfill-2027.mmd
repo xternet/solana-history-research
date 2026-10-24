@@ -1,0 +1,20 @@
+flowchart LR
+    sources("Ledger +<br/>snapshots")
+    subgraph workers["Replay workers"]
+        direction TB
+        own("Own cluster · 8")
+        storage("Storage hosts")
+        heads("Head servers")
+    end
+    eu("EU primary<br/>Dataforest")
+    us("US replica<br/>WebNX")
+    sources --> workers
+    workers --> eu
+    workers --> us
+    classDef input fill:#f8fafc,stroke:#94a3b8,color:#0f172a
+    classDef work fill:#f8fafc,stroke:#94a3b8,color:#0f172a
+    classDef store fill:#f0fdfa,stroke:#5baaa0,color:#0f172a
+    class sources input
+    class own,storage,heads work
+    class eu,us store
+    style workers fill:#ffffff,stroke:#cbd5e1,color:#475569

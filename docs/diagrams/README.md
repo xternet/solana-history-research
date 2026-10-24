@@ -1,49 +1,53 @@
 # Architecture & how it works
 
-SVM Replay already supports historical transaction replay, simulation and
-execution inspection. In our 1,198-transaction test, missing historical inputs
-blocked 59.8% of replays using the Alchemy-backed data available to us, whose
-coverage began in July 2025. This grant funds an independent, self-hosted backend
-covering Solana from genesis to the latest finalized block, retaining complete
-historical account state and execution context.
+Planned production design, updated October 24, 2026; not the offline demo's current capabilities.
 
-## Historical backfill
+## 3.1. Historical backfill
 
-Temporary workers replay Old Faithful ledger data from genesis or verified
-starting snapshots using version-matched runtimes. They capture per-transaction
-account changes and required execution context, then compress, index and verify
-the results. Two Hetzner archives split historical coverage; both copy verified
-data and restart checkpoints to the independent Artnet replica.
+- **Fetch:** Genesis, verified snapshots and free-access Old Faithful ledger inputs.
+- **Reconstruct:** Our eight workers, both storage hosts and temporarily the head servers replay size-balanced ranges.
+- **Store:** Workers write the same verified output directly to both complete EU/US copies.
 
 <p align="center">
-  <img src="solana-historical-research-Page-2.drawio.png" alt="Historical backfill architecture" />
+  <img src="solana-historical-backfill.drawio.png" alt="GET fetches inputs for workers on our cluster, heads and storage hosts; SET writes both full copies" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
-[Open / download Figure 1](solana-historical-research-Page-2.drawio.png)
+<p align="center"><sub>Verified writes to both copies. Worker counts are indicative.</sub></p>
 
-## Continuous sync and historical access
+[Editable draw.io PNG](solana-historical-backfill.drawio.png)
 
-After catch-up, temporary workers are retired. Our non-voting Latitude.sh node
-captures finalized changes; the Active Archive stores and verifies them before
-setting the replica. The open API serves historical state and complete replay
-inputs from both archives to SVM Replay, Txlab and external tools, without
-third-party historical-state calls. Coverage checks, corruption detection,
-monitoring and recovery protect continuity.
+## 3.2. Continuous sync & historical access
+
+- **Capture:** TeraSwitch Frankfurt and Newark run independent non-voting heads after their temporary worker phase.
+- **Append:** Reconcile finalized boundaries, verify updates and write sealed history directly to both copies.
+- **Serve:** Dataforest Frankfurt is the primary; WebNX Ogden holds a full copy and provides limited standby/API reads.
 
 <p align="center">
-  <img src="solana-historical-research-Page-1.drawio.png" alt="Continuous sync and historical access architecture" />
+  <img src="solana-historical-live.drawio.png" alt="EU and US heads capture finalized updates; SET writes both full copies and user GET goes through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
-[Open / download Figure 2](solana-historical-research-Page-1.drawio.png)
+<p align="center"><sub>Independent heads update both copies; GET uses the API or download service.</sub></p>
+
+[Editable draw.io PNG](solana-historical-live.drawio.png)
 
 ## Diagram notes
 
-Planned production architecture, not the repository's small offline demo. The
-2025 boundary is illustrative; the actual storage cutoff follows verified
-capacity. Requests can require versions from both shards. Verified ranges can
-serve requests during backfill, and head capture begins before final catch-up.
-Both PNGs retain editable draw.io source. [Technical design](../architecture.md).
+Both heads share TeraSwitch, so geographic diversity is not head-provider diversity.
+Standby is manual and rate-limited at the last verified checkpoint, not instant
+or equal-throughput failover. Capture starts before the final backfill/live join.
+Archive-to-archive transfers are for repair or catch-up, not the normal write path.
+
+GET/SET labels describe logical access, not a specific network protocol. The API
+and verification software run on the existing hosts, not an extra server.
+The displayed PNGs retain their editable draw.io data and are used unchanged.
+
+Earlier generated alternatives are retained:
+[Backfill Mermaid](backfill-2027.mmd) · [SVG](backfill-2027.svg) · [PNG](backfill-2027.png);
+[Continuous sync Mermaid](capture-access-2027.mmd) · [SVG](capture-access-2027.svg) · [PNG](capture-access-2027.png).
+The original numbered draw.io exports are also preserved as design history.
+
+[Technical design](../architecture.md) · [Capacity and access](../capacity-plan.md)
