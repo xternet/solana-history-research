@@ -29,7 +29,7 @@ sends identical segments to both destinations.
 
 - **Capture:** TeraSwitch Frankfurt and Newark run independent non-voting heads after their temporary worker phase.
 - **Append:** Reconcile finalized boundaries, verify updates and write sealed history directly to both copies.
-- **Serve:** Dataforest Frankfurt is the primary; BudgetVM Detroit holds a full copy and provides limited standby/API reads.
+- **Serve:** Both full archives expose regional APIs; tools choose the nearer healthy site and retry the other on failure or overload, within coverage and usage limits.
 
 <p align="center">
   <img src="sol-hist-16px-pt2-resized.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
@@ -52,9 +52,14 @@ Both heads share TeraSwitch, so geographic diversity is not head-provider divers
 This concentration risk is accepted: head compute is easier to replace than the
 archives. TeraSwitch balances validator proximity, hardware and price; it is not
 a claim of measured lowest latency. Storage providers remain independent.
-Standby is manual and rate-limited at the last verified checkpoint, not instant
-or equal-throughput failover. Capture starts before the final backfill/live join.
+API request fallback is planned to be automatic and rate-limited; server repair
+and archive recovery remain manual. Each site serves only verified coverage,
+within available capacity. Capture starts before the final backfill/live join.
 Archive-to-archive transfers are for repair or catch-up, not the normal write path.
+
+The [operations plan](../operations.md) defines sync/database health checks,
+alerts and usage caps behind regional API routing. Those controls run on the
+existing hosts and are not additional nodes in the diagrams.
 
 GET/SET labels describe logical access, not a specific network protocol. GET arrows
 point from requester to source; returned data travels in the opposite direction.

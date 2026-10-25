@@ -88,6 +88,9 @@ client quotas and each site's traffic limits and cannot bypass an exhausted user
 quota. If both sites are full, cap or queue requests. This request routing is an
 M2 deliverable; server repair and archive recovery remain manual.
 
+The [operations plan](operations.md) defines head-sync and database/API checks,
+alerts, circuit breakers and per-client token buckets, concurrency and byte caps.
+
 ## Planned machines
 
 Four selected dedicated machines; WebNX is an unbudgeted US fallback, not an
@@ -185,7 +188,7 @@ the matching runtime. It does not replay a slot prefix to rebuild captured state
 Discovery queries first select account IDs through temporal membership indexes;
 large supply/ranking queries may need scans. The pictured path is not a latency
 SLA for every planned RPC. [Architecture figures](diagrams/README.md) include
-the two current user-supplied PNGs with embedded editable draw.io data.
+the two current user-supplied SVGs with embedded editable draw.io data.
 
 ## Why not a trie or ClickHouse everywhere?
 

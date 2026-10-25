@@ -64,3 +64,4 @@ use is not conditional on purchasing higher quotas or bulk delivery.
 M2 acceptance requires a tagged public production release with deployment/API
 and recovery instructions. Test two-way regional API fallback and return to the
 preferred site, including outage, overload, coverage and quota checks.
+Include the health alerts and cap tests in the [operations plan](operations.md).

@@ -19,6 +19,7 @@ transactions or reproduce the larger benchmarks.
 | [2020-source download test](docs/fetch-evidence.md) | Four hosts/eight streams; verified ledger bytes, not replay throughput |
 | [2020 validation plan](docs/validation-plan.md) | Reproducible 100-slot selection and historical correctness acceptance gates |
 | [Usage and demand](docs/usage-plan.md) | Keyless metrics, privacy and low/medium/high traffic scenarios |
+| [Health, fallback and caps](docs/operations.md) | Planned sync/database checks, alerts, regional routing and fair-use methods |
 | [Supplier commitments](docs/supplier-commitments.md) | Quoted billing choices versus contractual minimums |
 | [Architecture](docs/architecture.md) | Snapshots, archived blocks, per-change capture, indexes and serving |
 | [2027 capacity plan](docs/capacity-plan.md) | Two complete EU/US copies, calendar growth and traffic limits |

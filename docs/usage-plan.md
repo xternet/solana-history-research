@@ -6,6 +6,10 @@ supported Surfpool/Anchor flows inherit it. Public history stays public. Rate,
 scan, concurrency and transfer limits protect fair access; optional paid higher
 usage, additional compute and bulk preparation/delivery do not gate basic use.
 
+The [operations plan](operations.md#enforce-fair-use) specifies token buckets,
+concurrency/scan/byte limits and cross-region quota accounting; the same client
+cannot reset its allowance through API fallback.
+
 ## Daily counters and monthly reports
 
 Report successful calls by method, errors, throttled/queued requests, replay-input
