@@ -54,7 +54,7 @@ The EU archive is not a compulsory relay to the US archive.
 ## After backfill
 
 <p align="center">
-  <img src="diagrams/sol-hist-16px-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
+  <img src="diagrams/sol-hist-16px-pt2-resized.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>

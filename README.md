@@ -18,7 +18,7 @@ transactions or reproduce the larger benchmarks.
 | [Test hardware](docs/test-environment.md) | Actual CPU, RAM, disks, worker limits and cache conditions |
 | [Architecture](docs/architecture.md) | Snapshots, archived blocks, per-change capture, indexes and serving |
 | [2027 capacity plan](docs/capacity-plan.md) | Two complete EU/US copies, calendar growth and traffic limits |
-| [Architecture figures](docs/diagrams/README.md) | Backfill and continuous capture; editable draw.io PNGs |
+| [Architecture figures](docs/diagrams/README.md) | Backfill and continuous capture; editable draw.io SVGs |
 | [Tool integrations](docs/integrations.md) | SVM Replay 0.2.0 and submitted Surfpool, Studio, Anchor and documentation PRs |
 | [Data contract](docs/data-contract.md) | What must be retained and which gaps remain |
 | [RPC scope](docs/rpc-scope.md) | The planned historical query surface and exact counting rules |
@@ -73,7 +73,7 @@ historical storage estimates.
 ### After backfill
 
 <p align="center">
-  <img src="docs/diagrams/sol-hist-16px-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service." />
+  <img src="docs/diagrams/sol-hist-16px-pt2-resized.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service." />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>

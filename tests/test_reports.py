@@ -240,7 +240,7 @@ class ReportTests(unittest.TestCase):
                 )
 
     def test_architecture_uses_latest_owner_drawio_exports(self):
-        for name, phase in (("sol-hist-16px.drawio.svg", "Backfill"), ("sol-hist-16px-pt2.drawio.svg", "Live")):
+        for name, phase in (("sol-hist-16px.drawio.svg", "Backfill"), ("sol-hist-16px-pt2-resized.drawio.svg", "Live")):
             path = ROOT / "docs/diagrams" / name
             source = drawio_source(path)
             diagram = next(node for node in source.findall("diagram") if node.get("name") == phase)
@@ -264,14 +264,14 @@ class ReportTests(unittest.TestCase):
     def test_only_current_diagram_assets_remain(self):
         folder = ROOT / "docs/diagrams"
         self.assertEqual({p.name for p in folder.iterdir() if p.is_file()}, {
-            "README.md", "sol-hist-16px.drawio.svg", "sol-hist-16px-pt2.drawio.svg",
+            "README.md", "sol-hist-16px.drawio.svg", "sol-hist-16px-pt2-resized.drawio.svg",
         })
 
     def test_active_owner_drawio_exports_keep_read_write_labels(self):
         folder = ROOT / "docs/diagrams"
         for name, phase, required in (
             ("sol-hist-16px.drawio.svg", "Backfill", ("Workers", "Archive", "Ledger", "Snapshots")),
-            ("sol-hist-16px-pt2.drawio.svg", "Live", ("Finalized", "Head", "Archive")),
+            ("sol-hist-16px-pt2-resized.drawio.svg", "Live", ("Finalized", "Head", "Archive")),
         ):
             path = folder / name
             tree = drawio_source(path)
@@ -311,8 +311,9 @@ class ReportTests(unittest.TestCase):
         for version, phase, prefix, expected in (
             ("sol-hist-16px.drawio.svg", "Backfill", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
                                                      ("23", "26"): "SET", ("26", "26"): "SET"}),
-            ("sol-hist-16px-pt2.drawio.svg", "Live", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
-                                                      ("14", "11"): "GET"}),
+            ("sol-hist-16px-pt2-resized.drawio.svg", "Live", "qO8Smt1WFaHzG3SJRyIX-", {
+                ("10", "3"): "GET", ("10", "IdP-N4fv3SwNU-3Ewirn-1"): "SET",
+                ("14", "IdP-N4fv3SwNU-3Ewirn-1"): "GET"}),
         ):
             tree = drawio_source(folder / version)
             diagram = next(node for node in tree.findall("diagram") if node.get("name") == phase)
@@ -320,7 +321,20 @@ class ReportTests(unittest.TestCase):
             actual = {}
             for edge in (c for c in cells if c.get("edge") == "1"):
                 label = next(c.get("value") for c in cells if c.get("parent") == edge.get("id"))
-                actual[(edge.get("source").removeprefix(prefix), edge.get("target").removeprefix(prefix))] = re.sub(r"<[^>]+>", "", label)
+                target = edge.get("target")
+                if target is None:
+                    # The owner's resized GET arrow has a fixed endpoint on the cloud.
+                    self.assertEqual(phase, "Live")
+                    self.assertEqual(edge.get("id"), prefix + "6")
+                    point = edge.find('mxGeometry/mxPoint[@as="targetPoint"]')
+                    self.assertIsNotNone(point)
+                    cloud = next(c for c in cells if c.get("id") == prefix + "3")
+                    geometry = cloud.find("mxGeometry")
+                    x, y, width, height = (float(geometry.get(k)) for k in ("x", "y", "width", "height"))
+                    self.assertTrue(x + .75 * width <= float(point.get("x")) <= x + width)
+                    self.assertTrue(y + .25 * height <= float(point.get("y")) <= y + .75 * height)
+                    target = cloud.get("id")
+                actual[(edge.get("source").removeprefix(prefix), target.removeprefix(prefix))] = re.sub(r"<[^>]+>", "", label)
             self.assertEqual(actual, expected)
         notes = (folder / "README.md").read_text()
         for phrase in ("blue EU", "green EU/US", "archive-local workers", "not EU-to-US replication",
@@ -328,7 +342,7 @@ class ReportTests(unittest.TestCase):
             self.assertIn(phrase, notes)
 
     def test_drawio_metadata_is_scanned_for_private_identifiers(self):
-        svg = ElementTree.fromstring((ROOT / "docs/diagrams/sol-hist-16px-pt2.drawio.svg").read_text())
+        svg = ElementTree.fromstring((ROOT / "docs/diagrams/sol-hist-16px-pt2-resized.drawio.svg").read_text())
         value = str(ipaddress.IPv4Address(1))
         svg.set("content", f'<mxfile><diagram><mxGraphModel secret="{value}"/></diagram></mxfile>')
         with tempfile.TemporaryDirectory() as folder:
@@ -352,7 +366,7 @@ class ReportTests(unittest.TestCase):
                 blocks,
                 (
                     ("sol-hist-16px.drawio.svg", "Figure 1 — Historical backfill"),
-                    ("sol-hist-16px-pt2.drawio.svg", "Figure 2 — Continuous sync and historical access"),
+                    ("sol-hist-16px-pt2-resized.drawio.svg", "Figure 2 — Continuous sync and historical access"),
                 ),
             ):
                 self.assertEqual(

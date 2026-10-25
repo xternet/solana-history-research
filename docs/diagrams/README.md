@@ -32,14 +32,14 @@ sends identical segments to both destinations.
 - **Serve:** Dataforest Frankfurt is the primary; BudgetVM Detroit holds a full copy and provides limited standby/API reads.
 
 <p align="center">
-  <img src="sol-hist-16px-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
+  <img src="sol-hist-16px-pt2-resized.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
 <p align="center"><sub>Independent heads update both archives; users read through the API or download service.</sub></p>
 
-[Editable draw.io SVG](sol-hist-16px-pt2.drawio.svg)
+[Editable draw.io SVG](sol-hist-16px-pt2-resized.drawio.svg)
 
 The same green hosts become **Head (EU/US)** after their worker phase. Each
 captures finalized changes independently; verification reconciles overlapping
@@ -64,6 +64,6 @@ allocations in the [server plan](../architecture.md#planned-machines).
 The two user-supplied SVGs use 16 px Arial labels and retain both editable draw.io
 pages; open either SVG in app.diagrams.net and select Backfill or Live to edit it.
 Vector outlines scale cleanly, with an export border around each figure.
-Superseded PNG and smaller-font SVG exports have been removed from the active assets.
+Superseded PNG, smaller-font and previous-layout SVG exports have been removed from the active assets.
 
 [Technical design](../architecture.md) · [Capacity and access](../capacity-plan.md)
