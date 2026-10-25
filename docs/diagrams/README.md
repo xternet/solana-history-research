@@ -9,14 +9,14 @@ Planned production design, updated October 25, 2026; not the offline demo's curr
 - **Store:** Workers write the same verified output directly to both complete EU/US copies.
 
 <p align="center">
-  <img src="solana-historical-1_2.drawio.png" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
+  <img src="solana-historical.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
 <p align="center"><sub>All workers fetch inputs and write verified output directly to both archives.</sub></p>
 
-[Editable draw.io PNG](solana-historical-1_2.drawio.png)
+[Editable draw.io SVG](solana-historical.drawio.svg)
 
 The blue EU circle is our owned cluster. The green EU/US circles are workers on
 the future head servers. Red **Workers + Archive** hosts combine a full history
@@ -32,14 +32,14 @@ sends identical segments to both destinations.
 - **Serve:** Dataforest Frankfurt is the primary; BudgetVM Detroit holds a full copy and provides limited standby/API reads.
 
 <p align="center">
-  <img src="solana-historical-2_2.drawio.png" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
+  <img src="solana-historical-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
 <p align="center"><sub>Independent heads update both archives; users read through the API or download service.</sub></p>
 
-[Editable draw.io PNG](solana-historical-2_2.drawio.png)
+[Editable draw.io SVG](solana-historical-pt2.drawio.svg)
 
 The same green hosts become **Head (EU/US)** after their worker phase. Each
 captures finalized changes independently; verification reconciles overlapping
@@ -61,7 +61,8 @@ point from requester to source; returned data travels in the opposite direction.
 The API and verification software run on the existing hosts, not an extra server.
 There are no worker counts in these figures: use the indicative, unbenchmarked
 allocations in the [server plan](../architecture.md#planned-machines).
-The two user-supplied PNGs are used unchanged and retain embedded editable draw.io
-data; open the PNG itself in app.diagrams.net to edit it. Superseded exports have been removed.
+The two user-supplied SVGs retain embedded editable draw.io data; open the SVG
+itself in app.diagrams.net to edit it. Vector outlines scale cleanly, with a
+10-pixel export border around each figure. Superseded PNG exports have been removed.
 
 [Technical design](../architecture.md) · [Capacity and access](../capacity-plan.md)

@@ -63,7 +63,7 @@ historical storage estimates.
 ### Backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-1_2.drawio.png" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives." />
+  <img src="docs/diagrams/solana-historical.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives." />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
@@ -73,7 +73,7 @@ historical storage estimates.
 ### After backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-2_2.drawio.png" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service." />
+  <img src="docs/diagrams/solana-historical-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service." />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>

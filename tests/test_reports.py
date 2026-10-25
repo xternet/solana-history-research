@@ -1,3 +1,4 @@
+import base64
 import json
 import ipaddress
 from pathlib import Path
@@ -22,6 +23,21 @@ PUBLIC_DOMAINS = {
 
 
 def public_file_text(path: Path) -> str:
+    if path.suffix == ".svg":
+        svg = ElementTree.fromstring(path.read_text())
+        metadata = drawio_source(path)
+        svg.attrib.pop("content")
+        for image in svg.iter("{http://www.w3.org/2000/svg}image"):
+            key = "{http://www.w3.org/1999/xlink}href"
+            href = image.get(key, "")
+            if href.startswith("data:image/png;base64,"):
+                raw = base64.b64decode(href.split(",", 1)[1], validate=True)
+                if not raw.startswith(b"\x89PNG\r\n\x1a\n"):
+                    raise ValueError("Invalid SVG label fallback PNG")
+                image.set(key, "embedded-label-png")
+        if "agent" in metadata.attrib:
+            metadata.set("agent", re.sub(r"\bChrome/\d+(?:\.\d+)+", "Chrome/[version]", metadata.get("agent")))
+        return ElementTree.tostring(svg, encoding="unicode") + ElementTree.tostring(metadata, encoding="unicode")
     if path.suffix != ".png":
         return path.read_text()
     data = path.read_bytes()
@@ -67,6 +83,14 @@ def public_file_text(path: Path) -> str:
     if position != len(data) or kinds[0] != b"IHDR" or kinds[-1] != b"IEND":
         raise ValueError("Invalid PNG framing or trailing data")
     return "\n".join(metadata)
+
+
+def drawio_source(path: Path):
+    svg = ElementTree.fromstring(path.read_text())
+    tree = ElementTree.fromstring(svg.attrib["content"])
+    if tree.tag != "mxfile" or not tree.findall("diagram"):
+        raise ValueError("Missing editable draw.io metadata")
+    return tree
 
 
 def privacy_issues(text: str) -> list[str]:
@@ -216,9 +240,9 @@ class ReportTests(unittest.TestCase):
                 )
 
     def test_architecture_uses_latest_owner_drawio_exports(self):
-        for version, phase in (("1_2", "Backfill"), ("2_2", "Live")):
-            png = ROOT / "docs/diagrams" / f"solana-historical-{version}.drawio.png"
-            source = ElementTree.fromstring(public_file_text(png))
+        for name, phase in (("solana-historical.drawio.svg", "Backfill"), ("solana-historical-pt2.drawio.svg", "Live")):
+            path = ROOT / "docs/diagrams" / name
+            source = drawio_source(path)
             diagram = next(node for node in source.findall("diagram") if node.get("name") == phase)
             labels = " ".join(cell.get("value", "") for cell in diagram.iter("mxCell"))
             self.assertIn("Archive", labels)
@@ -226,7 +250,8 @@ class ReportTests(unittest.TestCase):
             self.assertNotRegex(re.sub(r"<[^>]+>", " ", labels), r"\b\d+x?\s+[Ww]orkers")
             if phase == "Backfill":
                 self.assertIn("Old Faithful", labels)
-            width, height = struct.unpack_from(">II", png.read_bytes(), 16)
+            svg = ElementTree.fromstring(path.read_text())
+            width, height = (float(svg.get(key)) for key in ("width", "height"))
             self.assertGreaterEqual(width, 700)
             self.assertGreaterEqual(height, 90)
         self.assertIn("Architecture & how it works", (ROOT / "docs/diagrams/README.md").read_text())
@@ -234,21 +259,22 @@ class ReportTests(unittest.TestCase):
     def test_only_current_diagram_assets_remain(self):
         folder = ROOT / "docs/diagrams"
         self.assertEqual({p.name for p in folder.iterdir() if p.is_file()}, {
-            "README.md", "solana-historical-1_2.drawio.png", "solana-historical-2_2.drawio.png",
+            "README.md", "solana-historical.drawio.svg", "solana-historical-pt2.drawio.svg",
         })
 
     def test_active_owner_drawio_exports_keep_read_write_labels(self):
         folder = ROOT / "docs/diagrams"
         for name, required in (
-            ("solana-historical-1_2.drawio.png", ("Workers", "Archive", "Ledger", "Snapshots")),
-            ("solana-historical-2_2.drawio.png", ("Finalized", "Head", "Archive")),
+            ("solana-historical.drawio.svg", ("Workers", "Archive", "Ledger", "Snapshots")),
+            ("solana-historical-pt2.drawio.svg", ("Finalized", "Head", "Archive")),
         ):
             path = folder / name
-            tree = ElementTree.fromstring(public_file_text(path))
+            tree = drawio_source(path)
             labels = " ".join(cell.get("value", "") for cell in tree.iter("mxCell"))
             for label in ("GET", "SET", *required):
                 self.assertIn(label, labels)
-            width, height = struct.unpack_from(">II", path.read_bytes(), 16)
+            svg = ElementTree.fromstring(path.read_text())
+            width, height = (float(svg.get(key)) for key in ("width", "height"))
             self.assertGreaterEqual(width, 700)
             self.assertGreaterEqual(height, 90)
             for doc in (ROOT / "README.md", ROOT / "docs/architecture.md", folder / "README.md"):
@@ -277,12 +303,12 @@ class ReportTests(unittest.TestCase):
     def test_diagrams_show_storage_workers_and_direct_dual_writes(self):
         folder = ROOT / "docs/diagrams"
         for version, prefix, expected in (
-            ("1_2", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
+            ("solana-historical.drawio.svg", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
                                                      ("23", "26"): "SET", ("26", "26"): "SET"}),
-            ("2_2", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
+            ("solana-historical-pt2.drawio.svg", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
                                                       ("14", "11"): "GET"}),
         ):
-            tree = ElementTree.fromstring(public_file_text(folder / f"solana-historical-{version}.drawio.png"))
+            tree = drawio_source(folder / version)
             cells = list(tree.iter("mxCell"))
             actual = {}
             for edge in (c for c in cells if c.get("edge") == "1"):
@@ -295,23 +321,12 @@ class ReportTests(unittest.TestCase):
             self.assertIn(phrase, notes)
 
     def test_drawio_metadata_is_scanned_for_private_identifiers(self):
-        original = (
-            ROOT / "docs/diagrams/solana-historical-2_2.drawio.png"
-        ).read_bytes()
-        position = 8
-        while original[position + 4 : position + 8] != b"tEXt":
-            position += 12 + struct.unpack_from(">I", original, position)[0]
-        end = position + 12 + struct.unpack_from(">I", original, position)[0]
+        svg = ElementTree.fromstring((ROOT / "docs/diagrams/solana-historical-pt2.drawio.svg").read_text())
         value = str(ipaddress.IPv4Address(1))
-        body = (
-            b"mxfile\0"
-            + f'<mxfile><diagram><mxGraphModel secret="{value}"/></diagram></mxfile>'.encode()
-        )
-        payload = b"tEXt" + body
-        chunk = struct.pack(">I", len(body)) + payload + struct.pack(">I", zlib.crc32(payload))
+        svg.set("content", f'<mxfile><diagram><mxGraphModel secret="{value}"/></diagram></mxfile>')
         with tempfile.TemporaryDirectory() as folder:
-            path = Path(folder) / "synthetic.drawio.png"
-            path.write_bytes(original[:position] + chunk + original[end:])
+            path = Path(folder) / "synthetic.drawio.svg"
+            path.write_text(ElementTree.tostring(svg, encoding="unicode"))
             self.assertIn("IP address", privacy_issues(public_file_text(path)))
 
     def test_diagrams_and_captions_are_centered_without_wrapping_prose(self):
@@ -329,8 +344,8 @@ class ReportTests(unittest.TestCase):
             for (source, caption), (name, title) in zip(
                 blocks,
                 (
-                    ("solana-historical-1_2.drawio.png", "Figure 1 — Historical backfill"),
-                    ("solana-historical-2_2.drawio.png", "Figure 2 — Continuous sync and historical access"),
+                    ("solana-historical.drawio.svg", "Figure 1 — Historical backfill"),
+                    ("solana-historical-pt2.drawio.svg", "Figure 2 — Continuous sync and historical access"),
                 ),
             ):
                 self.assertEqual(
