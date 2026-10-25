@@ -242,8 +242,9 @@ These are production deliverables, not capabilities demonstrated by the offline 
   outgoing transfer and preparation costs without charging those exports to the grant.
 - **Txlab:** Larger quotas, replay/backtesting compute and custom processing can be
   paid services with authenticated access. Never embed a shared secret in public
-  clients. All grant-funded code and formats remain public/open-source. Anonymous
-  free calls do not count toward verified-project adoption rewards.
+  clients. All grant-funded code and formats remain public/open-source. Usage is
+  reported separately from the proposed expense-based adoption campaign; there
+  is no request-volume bounty.
 - **Support:** Nine funded maintenance months, April–December 2027. Review renewal
   or Foundation/operator handover by December 1; hosting ends December 31.
 

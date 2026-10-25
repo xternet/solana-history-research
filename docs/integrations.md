@@ -39,8 +39,9 @@ claim that the open integration PRs have merged.
 
 Published limits cover request rates, scans and transfers; enforce them server-side. Authentication remains for
 higher quotas and paid jobs; do not distribute a shared secret in clients.
-Verified adoption rewards require identifiable external projects, not anonymous
-traffic. Additional tools can integrate through the documented API.
+Usage reports distinguish anonymous traffic from opt-in external project examples;
+request counts do not earn a payment bounty. Additional tools can integrate
+through the documented API.
 
 Tools will select and remember the nearer EU/US API endpoint, then retry once at
 the other site on timeout, unavailability or overload. Client quotas, verified
@@ -56,8 +57,8 @@ Earlier fixes (**merged**) remain separate: LiteSVM
 [#795](https://github.com/solana-foundation/surfpool/pull/795).
 
 The [usage plan](usage-plan.md) includes aggregate daily keyless traffic and
-outgoing bandwidth, separate from verified-project reward accounting. Basic free
-use is not conditional on purchasing higher quotas or bulk delivery.
+outgoing bandwidth, separate from the proposed expense-based adoption campaign.
+Basic free use is not conditional on purchasing higher quotas or bulk delivery.
 
 ## M2 public release
 

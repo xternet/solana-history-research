@@ -25,9 +25,27 @@ these are **network-client estimates, not unique people or projects**. Do not su
 daily distinct counts and call the result monthly unique users. Any security logs
 need a separate limited retention/access policy.
 
-Keyless traffic counts toward operational impact, but cannot alone substantiate
-verified-project adoption rewards. Retain the separate project-attested reward
-rules and report active/returning verified projects alongside aggregate free use.
+Keyless traffic measures operational impact, not independently verified people or
+projects. Count top-level user workflows separately from internal account fetches,
+retries and tests; one replay can generate many subcalls. Report opt-in external
+use examples separately. There is no payment bounty for generating request volume.
+
+## Adoption campaign funding request
+
+Request the full $10,000 campaign budget in March for April–December activities,
+subject to Foundation approval. Keyless access and request fan-out make raw usage
+hard to attribute and easy to inflate, so the proposed budget pays for outreach
+work and campaign expenses instead of a usage bounty. Usage remains reported.
+
+The advance funds campaign preparation, ad credits and booked placements before
+results arrive. This is a requested cash-flow arrangement, not a claim that every
+supplier requires full prepayment. The former $2,000 reward allocation funds
+developer onboarding sessions and adoption demos instead.
+
+Agree the campaign scope and cost caps before release. Provide monthly receipts,
+work logs, published materials and impact reports; return unused funds unless
+the Foundation approves reallocation. This expense-based advance is a requested
+exception to the template's usage-linked adoption payments; it is not yet approved.
 
 ## Illustrative low / medium / high demand
 
