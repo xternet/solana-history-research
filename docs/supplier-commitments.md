@@ -47,3 +47,8 @@ payments fall due. These sum to $100,000; the second hosting tranche is not an
 extra charge in the maintenance budget. June review checks invoices, service,
 capacity and the next term. Foundation approval and matching vendor terms are
 required; do not sign a 24-month obligation against twelve funded months.
+
+Alternatively, the Foundation may pay approved hosting invoices for either
+tranche directly to providers, subject to agreement. These payments count toward
+M2's existing budget and are deducted from funds transferred to the applicant;
+the applicant does not receive or claim those hosting amounts again.
