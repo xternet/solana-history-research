@@ -15,7 +15,7 @@ automatic updates and the context needed at the requested transaction boundary.
 ## Backfill
 
 <p align="center">
-  <img src="diagrams/solana-historical.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
+  <img src="diagrams/sol-hist-16px.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
@@ -54,7 +54,7 @@ The EU archive is not a compulsory relay to the US archive.
 ## After backfill
 
 <p align="center">
-  <img src="diagrams/solana-historical-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
+  <img src="diagrams/sol-hist-16px-pt2.drawio.svg" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>

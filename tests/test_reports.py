@@ -240,7 +240,7 @@ class ReportTests(unittest.TestCase):
                 )
 
     def test_architecture_uses_latest_owner_drawio_exports(self):
-        for name, phase in (("solana-historical.drawio.svg", "Backfill"), ("solana-historical-pt2.drawio.svg", "Live")):
+        for name, phase in (("sol-hist-16px.drawio.svg", "Backfill"), ("sol-hist-16px-pt2.drawio.svg", "Live")):
             path = ROOT / "docs/diagrams" / name
             source = drawio_source(path)
             diagram = next(node for node in source.findall("diagram") if node.get("name") == phase)
@@ -251,6 +251,11 @@ class ReportTests(unittest.TestCase):
             if phase == "Backfill":
                 self.assertIn("Old Faithful", labels)
             svg = ElementTree.fromstring(path.read_text())
+            label_styles = [node.get("style", "") for node in svg.iter()
+                            if "font-family:" in node.get("style", "")]
+            self.assertTrue(label_styles)
+            self.assertTrue(all("font-size: 16px;" in style for style in label_styles))
+            self.assertTrue(all("font-family: Arial;" in style for style in label_styles))
             width, height = (float(svg.get(key)) for key in ("width", "height"))
             self.assertGreaterEqual(width, 700)
             self.assertGreaterEqual(height, 90)
@@ -259,18 +264,19 @@ class ReportTests(unittest.TestCase):
     def test_only_current_diagram_assets_remain(self):
         folder = ROOT / "docs/diagrams"
         self.assertEqual({p.name for p in folder.iterdir() if p.is_file()}, {
-            "README.md", "solana-historical.drawio.svg", "solana-historical-pt2.drawio.svg",
+            "README.md", "sol-hist-16px.drawio.svg", "sol-hist-16px-pt2.drawio.svg",
         })
 
     def test_active_owner_drawio_exports_keep_read_write_labels(self):
         folder = ROOT / "docs/diagrams"
-        for name, required in (
-            ("solana-historical.drawio.svg", ("Workers", "Archive", "Ledger", "Snapshots")),
-            ("solana-historical-pt2.drawio.svg", ("Finalized", "Head", "Archive")),
+        for name, phase, required in (
+            ("sol-hist-16px.drawio.svg", "Backfill", ("Workers", "Archive", "Ledger", "Snapshots")),
+            ("sol-hist-16px-pt2.drawio.svg", "Live", ("Finalized", "Head", "Archive")),
         ):
             path = folder / name
             tree = drawio_source(path)
-            labels = " ".join(cell.get("value", "") for cell in tree.iter("mxCell"))
+            diagram = next(node for node in tree.findall("diagram") if node.get("name") == phase)
+            labels = " ".join(cell.get("value", "") for cell in diagram.iter("mxCell"))
             for label in ("GET", "SET", *required):
                 self.assertIn(label, labels)
             svg = ElementTree.fromstring(path.read_text())
@@ -302,14 +308,15 @@ class ReportTests(unittest.TestCase):
 
     def test_diagrams_show_storage_workers_and_direct_dual_writes(self):
         folder = ROOT / "docs/diagrams"
-        for version, prefix, expected in (
-            ("solana-historical.drawio.svg", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
+        for version, phase, prefix, expected in (
+            ("sol-hist-16px.drawio.svg", "Backfill", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
                                                      ("23", "26"): "SET", ("26", "26"): "SET"}),
-            ("solana-historical-pt2.drawio.svg", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
+            ("sol-hist-16px-pt2.drawio.svg", "Live", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
                                                       ("14", "11"): "GET"}),
         ):
             tree = drawio_source(folder / version)
-            cells = list(tree.iter("mxCell"))
+            diagram = next(node for node in tree.findall("diagram") if node.get("name") == phase)
+            cells = list(diagram.iter("mxCell"))
             actual = {}
             for edge in (c for c in cells if c.get("edge") == "1"):
                 label = next(c.get("value") for c in cells if c.get("parent") == edge.get("id"))
@@ -321,7 +328,7 @@ class ReportTests(unittest.TestCase):
             self.assertIn(phrase, notes)
 
     def test_drawio_metadata_is_scanned_for_private_identifiers(self):
-        svg = ElementTree.fromstring((ROOT / "docs/diagrams/solana-historical-pt2.drawio.svg").read_text())
+        svg = ElementTree.fromstring((ROOT / "docs/diagrams/sol-hist-16px-pt2.drawio.svg").read_text())
         value = str(ipaddress.IPv4Address(1))
         svg.set("content", f'<mxfile><diagram><mxGraphModel secret="{value}"/></diagram></mxfile>')
         with tempfile.TemporaryDirectory() as folder:
@@ -344,8 +351,8 @@ class ReportTests(unittest.TestCase):
             for (source, caption), (name, title) in zip(
                 blocks,
                 (
-                    ("solana-historical.drawio.svg", "Figure 1 — Historical backfill"),
-                    ("solana-historical-pt2.drawio.svg", "Figure 2 — Continuous sync and historical access"),
+                    ("sol-hist-16px.drawio.svg", "Figure 1 — Historical backfill"),
+                    ("sol-hist-16px-pt2.drawio.svg", "Figure 2 — Continuous sync and historical access"),
                 ),
             ):
                 self.assertEqual(
