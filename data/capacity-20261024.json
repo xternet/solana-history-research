@@ -24,14 +24,14 @@
       "data_envelope_10pct_free_tb": 806.4,
       "stress_headroom_tb": 158.5061014984724
     },
-    "us_webnx": {
-      "raw_tb": 1080,
-      "raid_groups": 5,
-      "disks_per_group": 12,
-      "disk_tb": 18,
-      "post_parity_tb": 900,
-      "data_envelope_10pct_free_tb": 810.0,
-      "stress_headroom_tb": 162.1061014984724
+    "us_budgetvm": {
+      "raw_tb": 1008,
+      "raid_groups": 2,
+      "disks_per_group": 18,
+      "disk_tb": 28,
+      "post_parity_tb": 896,
+      "data_envelope_10pct_free_tb": 806.4,
+      "stress_headroom_tb": 158.5061014984724
     }
   },
   "scenarios": {
@@ -72,5 +72,16 @@
     "activity": "823a041956d1f07428ddfd9ea11700571225e3cf997bec574351b869c2239211",
     "query": "ce3db3d4e41fcb63baefd9df3ce1ba396e27e7e0dbb5564baa0caeab05ed1136",
     "published": "4cabcbd915aa2967a237534b6810504fe214fc0e7d38dda357f222e71f35f432"
+  },
+  "alternative_layouts": {
+    "us_webnx": {
+      "raw_tb": 1080,
+      "raid_groups": 5,
+      "disks_per_group": 12,
+      "disk_tb": 18,
+      "post_parity_tb": 900,
+      "data_envelope_10pct_free_tb": 810.0,
+      "stress_headroom_tb": 162.1061014984724
+    }
   }
 }

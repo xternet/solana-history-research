@@ -15,14 +15,20 @@ automatic updates and the context needed at the requested transaction boundary.
 ## Backfill
 
 <p align="center">
-  <img src="diagrams/solana-historical-backfill.drawio.png" alt="GET fetches inputs for workers on our cluster, heads and storage hosts; SET writes both full copies" />
+  <img src="diagrams/solana-historical-1_2.drawio.png" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
-<p align="center"><sub>Verified writes to both copies. Worker counts are indicative.</sub></p>
+<p align="center"><sub>All workers fetch inputs and write verified output directly to both archives.</sub></p>
 
-The EU Dataforest primary and US WebNX replica each hold the complete historical
+The blue EU workers are our existing cluster; green EU/US workers use the rented
+head servers temporarily. Red **Workers + Archive** hosts also replay inputs.
+The upper GET arrow includes these archive-local workers; their SET loop writes
+to both full archives, not just the local disk or an EU-to-US relay. GET arrows
+point from requester to source; response traffic flows back to the requester.
+
+The EU Dataforest primary and US BudgetVM replica each hold the complete historical
 dataset; they are not disjoint calendar shards. The new plan replaces the earlier
 two-Hetzner-plus-Artnet layout. Internal immutable segments still have shard IDs,
 but adding a second complete copy does not double the logical-history estimate.
@@ -38,8 +44,8 @@ density is measured per machine, not inferred from RAM alone. No additional
 temporary worker fleet is assumed. Capture retains native effects and finalization,
 not merely third-party RPC subscriptions.
 
-Dataforest also runs replay workers when CPU, RAM, scratch and serving load
-permit. WebNX is not counted for replay without qualified scratch. Each producer seals output
+Dataforest and BudgetVM also run replay workers when CPU, RAM, scratch and serving
+load permit. Each producer seals output
 once and sends the identical segments directly to both storage destinations.
 Each site verifies checksums and records its own durable acknowledgement before
 the coverage manifest marks that copy complete. Writes and retries are idempotent.
@@ -48,12 +54,16 @@ The EU archive is not a compulsory relay to the US archive.
 ## After backfill
 
 <p align="center">
-  <img src="diagrams/solana-historical-live.drawio.png" alt="EU and US heads capture finalized updates; SET writes both full copies and user GET goes through the API or download service" />
+  <img src="diagrams/solana-historical-2_2.drawio.png" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
-<p align="center"><sub>Independent heads update both copies; GET uses the API or download service.</sub></p>
+<p align="center"><sub>Independent heads update both archives; users read through the API or download service.</sub></p>
+
+**Head** is the same machine that temporarily ran green backfill workers; it now
+captures finalized changes. **Archive** is the complete stored history, not an
+extra host. GET/SET denotes logical reads/writes, not literal HTTP endpoints.
 
 Temporary worker allocations end after catch-up; the rented machines remain
 funded for the year. Frankfurt and Newark heads independently capture finalized
@@ -62,31 +72,46 @@ then writes directly to both copies. This coordination is co-located with the
 existing hosts, not an extra server. Verified ranges can serve requests
 during backfill. Start capture before the final backfill/live-state join and
 retain overlap to verify the join; never treat a missing range as unchanged state.
-Both heads share TeraSwitch and therefore do not provide head-provider independence.
+Both heads share TeraSwitch: this provider-concentration risk is accepted because
+head compute is easier to replace than a petabyte-scale archive. TeraSwitch is
+chosen for the balance of validator-cluster proximity, hardware and price, not a
+claim of measured lowest capture latency. A simultaneous head outage still
+requires verified catch-up; it must not silently create historical gaps. The
+two complete storage copies remain with independent providers.
 
 ## Planned machines
 
-One dedicated machine per row; these are planned configurations, not deployed hosts.
+Four selected dedicated machines; WebNX is an unbudgeted US fallback, not an
+additional server. These are planned configurations, not deployed hosts.
 
-| Provider / location | Type | CPU / RAM | Drives | Outgoing / month; port | Est. replay workers | Net price / month; year |
-|---|---|---|---|---|---|---|
-| TeraSwitch, Frankfurt | Head | EPYC 9354: 32C/64T; 512 GB DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 |
-| TeraSwitch, Newark | Head | EPYC 9354: 32C/64T; 512 GB DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 (estimate) |
-| Dataforest, Frankfurt | Storage | EPYC 7713: 64C/128T; 512 GB DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | ≈$1,714; ≈$20,570 |
-| WebNX, Ogden | Storage | 2x Xeon Bronze 3106: 16C/16T total; 384 GB DDR4 | 60x18 TB HDD; 480 GB SSD boot | 500 TB; 10 Gbps | 0–1 | $1,851; $22,212 |
+| Provider / role | Location | CPU | RAM | Drives | Outgoing / month; port | Jobs | Net price / month; year |
+|---|---|---|---|---|---|---|---|
+| TeraSwitch / Head | EU<br>Frankfurt | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 |
+| TeraSwitch / Head | US<br>Newark | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 (estimate) |
+| Dataforest / Storage | EU<br>Frankfurt | EPYC 7713<br>64C/128T | 512 GB<br>DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | ≈$1,714; ≈$20,570 |
+| BudgetVM / Storage | US<br>Detroit | 2x Xeon Gold 6152<br>44C/88T total | 512 GB<br>DDR4 | 36x28 TB HDD; 960 GB NVMe boot; 6.4 TB enterprise NVMe | 300 TB; 10 Gbps; unlimited incoming | 4–5 | $2,269; $27,228 (monthly billing annualized) |
+| WebNX / Storage fallback | US<br>Ogden | 2x Xeon Bronze 3106<br>16C/16T total | 384 GB<br>DDR4 | 60x18 TB HDD; 480 GB SSD boot | 500 TB; 10 Gbps | 0–1 | $1,851; $22,212 |
 
-Own cluster: **8 workers**; estimated backfill total **22–32**, excluding WebNX.
+Jobs are estimated concurrent replay workers, not measured equal-speed throughput.
+
+BudgetVM is budgeted with monthly billing; alternatives are $6,759 per quarter
+($27,036 annualized) or $26,689 annual prepayment, with no setup fee. True HBA/IT
+passthrough, written workload approval for continuous replay and bulk downloads,
+and overage terms must be confirmed. Dataforest's quoted monthly rate does not
+establish its minimum term, setup fee or payment-period discount.
+
+Own cluster: **8 workers**; estimated backfill total **26–37**, excluding the WebNX fallback.
 **Estimates, not benchmarks:** allow 8–16 CPU threads and approximately 40 GiB per
 job, with CPU reserved for shared archive work. The RAM allowance combines the
 retained native-replay and encoder ceilings; it is not a measured integrated job.
 Scratch, source access, network and durable writes still need qualification.
-The diagrams' counts are indicative, not equal-speed worker guarantees.
+Worker estimates in the table are indicative, not equal-speed guarantees;
+the diagrams intentionally omit counts.
 Heads first run backfill, then switch to native capture.
 
-WebNX is the archive/download replica, not comparable backfill compute: it has
-older low-clock CPUs and **no quoted NVMe scratch**. Its 0–1 estimate is a CPU
-possibility only; **zero WebNX replay workers are counted toward completion**.
-Dataforest supplies the materially stronger shared storage/compute configuration.
+BudgetVM's 4–5 range uses the same 16-thread storage-job allocation as Dataforest,
+reserving one quarter of threads in the low case; it is not measured throughput.
+WebNX has **no quoted NVMe scratch** and contributes no scheduled workers.
 The [worker plan](../data/worker-plan-20261024.json) records the arithmetic and assumptions.
 Dataforest's USD figures use the planning rate €1 = $1.1193 (October 23, 2026);
 the original quote remains €1,531.48/month, excluding tax.
@@ -97,7 +122,7 @@ of independent data storage; accounts and ledger use separate NVMe drives.
 Budget heads at **$920/month each**, based on the configured Frankfurt machine;
 Newark price/stock require confirmation. Each includes 150 TB/month outgoing,
 not unmetered traffic. The two full storage copies have separate allowances:
-250 TB/month EU and the purchased 500 TB/month US tier. See the
+250 TB/month EU and the selected 300 TB/month US tier. See the
 [capacity and access plan](capacity-plan.md) for limits and delivery handling.
 
 ## Build once, query many times
@@ -149,7 +174,7 @@ the matching runtime. It does not replay a slot prefix to rebuild captured state
 Discovery queries first select account IDs through temporal membership indexes;
 large supply/ranking queries may need scans. The pictured path is not a latency
 SLA for every planned RPC. [Architecture figures](diagrams/README.md) include
-editable draw.io PNGs and retained earlier Mermaid/SVG variants.
+the two current user-supplied PNGs with embedded editable draw.io data.
 
 ## Why not a trie or ClickHouse everywhere?
 
@@ -193,15 +218,19 @@ These are production deliverables, not capabilities demonstrated by the offline 
 
 ## Public access and funded operations
 
-- **Free:** All planned RPCs have a bounded allowance; shared compressed downloads
-  and coverage manifests are available during funded hosting.
-- **US traffic:** Reserve operations first within the WebNX 500 TB/month outgoing
+- **Free:** Planned keyless access through SVM Replay, supported Surfpool/Anchor
+  workflows and the Txlab UI; no developer-supplied API key for basic use. All
+  planned RPCs have rate limits, bounded allowances and server-side abuse controls. Shared
+  downloads and coverage manifests are available during funded hosting.
+- **US traffic:** Reserve operations first within the BudgetVM 300 TB/month outgoing
   allowance; cap or queue free API/bulk usage before exhaustion. The port speed is
   not an unmetered entitlement. Confirm a no-overage cutoff before deployment.
 - **Paid delivery:** Large prepaid exports use the EU site; cover additional
   outgoing transfer and preparation costs without charging those exports to the grant.
 - **Txlab:** Larger quotas, replay/backtesting compute and custom processing can be
-  paid services. All grant-funded code and formats remain public/open-source.
+  paid services with authenticated access. Never embed a shared secret in public
+  clients. All grant-funded code and formats remain public/open-source. Anonymous
+  free calls do not count toward verified-project adoption rewards.
 - **Support:** Nine funded maintenance months, April–December 2027. Review renewal
   or Foundation/operator handover by December 1; hosting ends December 31.
 

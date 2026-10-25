@@ -63,37 +63,46 @@ historical storage estimates.
 ### Backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-backfill.drawio.png" alt="GET fetches inputs for workers on our cluster, heads and storage hosts; SET writes both EU and US copies." />
+  <img src="docs/diagrams/solana-historical-1_2.drawio.png" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives." />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
-<p align="center"><sub>Verified writes to both copies. Worker counts are indicative.</sub></p>
+<p align="center"><sub>All workers fetch inputs and write verified output directly to both archives.</sub></p>
 
 ### After backfill
 
 <p align="center">
-  <img src="docs/diagrams/solana-historical-live.drawio.png" alt="EU and US heads capture finalized Solana updates; SET writes both copies and user GET goes through the API or download service." />
+  <img src="docs/diagrams/solana-historical-2_2.drawio.png" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service." />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
-<p align="center"><sub>Independent heads update both copies; GET uses the API or download service.</sub></p>
+<p align="center"><sub>Independent heads update both archives; users read through the API or download service.</sub></p>
 
 [Backfill and after-backfill views](docs/diagrams/README.md).
 These figures describe the planned production backend, not the small offline demo.
+The blue EU workers are our cluster; green EU/US workers temporarily use the head
+servers. Both red archive hosts also run qualified workers. GET arrows show
+requests, not response direction; SET writes to both archives, not EU-to-US forwarding.
 
 The selected design uses immutable compressed history, bounded RocksDB ingestion
 overlays, PostgreSQL service metadata, HDD capacity and bounded NVMe/RAM caches.
 The choice is based on small local comparisons, not a universal database ranking.
 The updated plan uses one complete Dataforest copy in Frankfurt and one complete
-WebNX replica in Ogden, plus TeraSwitch heads in Frankfurt and Newark. Spare
+BudgetVM replica in Detroit, plus TeraSwitch heads in Frankfurt and Newark. Spare
 head compute first helps backfill; heads switch to capture before the final join.
-Qualified storage compute also helps; WebNX is not counted for replay without NVMe scratch. Each producer
+Qualified compute on both storage hosts also helps. Each producer
 writes directly to both copies; neither site is a mandatory relay for the other.
 These remain planned deployments, not currently operating services.
 The [planned-machine table](docs/architecture.md#planned-machines) lists CPU,
 RAM, drives and the worker-allocation policy for all four rented hosts.
+WebNX Ogden remains an unbudgeted US fallback. Shared TeraSwitch head-provider
+risk is accepted; the two full archives retain independent storage providers.
+
+Planned free access is built into SVM Replay, supported Surfpool/Anchor workflows
+and the Txlab replay UI, without developers supplying an API key. Published
+quotas and abuse controls apply; this is not a currently deployed service.
 
 ## What this does not prove
 

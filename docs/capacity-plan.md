@@ -27,16 +27,16 @@ are not credited before integrated qualification.
 | Site | Raw HDD | Double-parity layout | After parity | Data envelope with 10% free |
 |---|---:|---|---:|---:|
 | EU primary: Dataforest, Frankfurt | 36x28 TB = 1,008 TB | 2x18-drive RAIDZ2/RAID6 groups | 896 TB | 806.4 TB |
-| US replica: WebNX, Ogden | 60x18 TB = 1,080 TB | 5x12-drive RAIDZ2/RAID6 groups | 900 TB | 810 TB |
+| US replica: BudgetVM, Detroit | 36x28 TB = 1,008 TB | 2x18-drive RAIDZ2 groups | 896 TB | 806.4 TB |
 
-These are **two full copies**, not 1,616.4 TB available to one copy. Filesystem
+These are **two full copies**, not 1,612.8 TB available to one copy. Filesystem
 overhead further reduces each envelope. The group layouts are planning choices,
 not deployed arrays or supplier guarantees. ZFS HBA/passthrough support, rebuild
 behaviour and exact drive geometry must be confirmed before ordering.
 
 At the **525.049 TB** central year-end scenario, the envelopes leave approximately
-281 TB EU and 285 TB US. Even the **647.894 TB** stress scenario leaves about
-159 TB EU and 162 TB US, before any filesystem adjustment. No mid-2027 additional
+281 TB at each site. Even the **647.894 TB** stress scenario leaves about
+159 TB at each site, before any filesystem adjustment. No mid-2027 additional
 storage server is included in the updated plan. Reforecast monthly and arrange
 approval/funding before approaching 10% free post-parity capacity.
 
@@ -55,13 +55,14 @@ It replaces the earlier SX295/Artnet expansion plan, not the retained measuremen
 All four rented machines are funded once for January–December 2027. Planned
 heads are TeraSwitch Frankfurt and Newark; both share a provider. Spare CPU/RAM,
 scratch, source access, network and sustained HDD writes limit useful concurrency.
-The WebNX dual-Bronze storage host is not equivalent to the Dataforest EPYC host;
+The BudgetVM dual-Xeon storage host is not equivalent to the Dataforest EPYC host;
 no fixed eight-worker allowance is assumed for every rented machine.
 
-The current planning range is 4–8 replay workers per head and 6–8 on Dataforest,
-plus our eight workers: 22–32 allocations, not equal-speed throughput units.
-WebNX's 0–1 CPU-based estimate is not counted toward completion because the quote
-has no NVMe scratch. See the [host table](architecture.md#planned-machines).
+The current planning range is 4–8 replay workers per head, 6–8 on Dataforest and
+4–5 on BudgetVM, plus our eight workers: 26–37 allocations, not equal-speed
+throughput units. WebNX is an unbudgeted fallback, with no scheduled replay
+workers because it has no quoted NVMe scratch. See the
+[host table](architecture.md#planned-machines).
 
 The [planned-machine table](architecture.md#planned-machines) specifies the two
 EPYC 9354 heads with 512 GB RAM and separate accounts/ledger NVMe drives.
@@ -73,13 +74,20 @@ are not yet confirmed. A 9354 has 32 physical cores / 64 threads, not 64 cores.
 | Site | Included monthly outgoing | Planned handling |
 |---|---:|---|
 | Dataforest | 250 TB; incoming free | Paid EU exports cover excess outgoing delivery; quote currently specifies €1/additional TB |
-| WebNX | Purchased 500 TB tier | Reserve operations first; cap/queue free API and shared downloads before allowance exhaustion |
+| BudgetVM | Selected 300 TB tier; incoming unlimited | Reserve operations first; cap/queue free API and shared downloads before allowance exhaustion |
 
 These are per-server monthly volumes, not guaranteed throughput or shared quotas.
 Initial replica seeding, continuous capture and repairs consume traffic too. Queue
 large jobs, account for retries and reserve a safety margin; a provider-approved
 hard cutoff/no-overage agreement is required before relying on a strict bill cap.
 Port speed alone does not establish end-to-end transfer speed.
+BudgetVM's workload/distribution permission and overage terms must be confirmed;
+the checkout label does not waive its acceptable-use policy. Its monthly billing
+is budgeted for twelve months, not assumed to require annual prepayment.
+Dataforest's minimum term, billing-period discounts and setup fee are unconfirmed.
+
+WebNX Ogden remains a secondary US option: 810 TB modeled envelope and 500 TB/month
+outgoing at $1,851/month. It is not an additional funded machine.
 
 Shared downloads remain free within published limits. Paid exports recover actual
 compressed delivery/preparation costs; they do not make public data proprietary.

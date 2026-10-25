@@ -1,4 +1,3 @@
-from hashlib import sha256
 import json
 import ipaddress
 from pathlib import Path
@@ -109,16 +108,55 @@ class ReportTests(unittest.TestCase):
 
     def test_planned_hosts_distinguish_cores_threads_and_worker_capacity(self):
         text = (ROOT / "docs/architecture.md").read_text()
-        self.assertEqual(text.count("EPYC 9354: 32C/64T"), 2)
-        self.assertEqual(text.count("512 GB DDR5"), 2)
-        for phrase in ("EPYC 7713: 64C/128T", "16C/16T total", "Own cluster: **8 workers**",
+        self.assertEqual(text.count("EPYC 9354<br>32C/64T"), 2)
+        self.assertEqual(text.count("512 GB<br>DDR5"), 2)
+        for phrase in ("EPYC 7713<br>64C/128T", "16C/16T total", "Own cluster: **8 workers**",
                        "Estimates, not benchmarks", "$920/month each",
                        "Newark price/stock require confirmation", "2x960 GB RAID1 boot",
                        "2x3.84 TB NVMe", "150 TB/month outgoing"):
             self.assertIn(phrase, text)
-        for phrase in ("4–8", "6–8", "0–1", "$11,040", "≈$20,570", "$22,212",
-                       "22–32", "no quoted NVMe scratch"):
+        for phrase in ("4–8", "6–8", "4–5", "0–1", "$11,040", "≈$20,570", "$22,212",
+                       "$27,228", "26–37", "no quoted NVMe scratch"):
             self.assertIn(phrase, text)
+
+    def test_budgetvm_is_selected_with_webnx_fallback_and_explicit_billing(self):
+        model = json.loads((ROOT / "data/worker-plan-20261024.json").read_text())
+        text = (ROOT / "docs/architecture.md").read_text()
+        self.assertEqual(len(model["alternatives"]), 1)
+        option = next(host for host in model["hosts"] if host["provider"] == "BudgetVM")
+        self.assertEqual(option["provider"], "BudgetVM")
+        self.assertEqual(model["alternatives"][0]["provider"], "WebNX")
+        self.assertFalse(model["alternatives"][0]["counts_toward_budget"])
+        self.assertTrue(option["counts_toward_budget"])
+        self.assertTrue(option["counts_toward_worker_total"])
+        self.assertFalse(option["workload_permission_confirmed"])
+        self.assertFalse(option["scratch_qualified"])
+        self.assertEqual(int(option["annual_price"]), int(option["monthly_price"]) * 12)
+        billing = option["billing"]
+        self.assertEqual(int(billing["quarterly_annualized_usd"]),
+                         int(billing["quarterly_payment_usd"]) * 4)
+        self.assertLess(int(billing["annual_prepayment_usd"]), int(option["annual_price"]))
+        for bound in ("min", "max"):
+            cpu = option["worker_cpu_threads_low" if bound == "min" else "worker_cpu_threads_high"]
+            threads = option["worker_threads_each_low" if bound == "min" else "worker_threads_each_high"]
+            self.assertEqual(option[f"estimated_workers_{bound}"],
+                             min(option["worker_memory_cap"], cpu // threads))
+            scheduled = model["owned_workers"] + sum(
+                host[f"scheduled_workers_{bound}"] for host in model["hosts"])
+            self.assertEqual(model[f"scheduled_total_{bound}"], scheduled)
+        for phrase in ("BudgetVM / Storage | US<br>Detroit", "44C/88T", "4–5", "$2,269; $27,228",
+                       "$6,759", "$26,689", "not an additional server", "written workload approval"):
+            self.assertIn(phrase, " ".join(text.split()))
+
+    def test_planned_keyless_access_retains_limits_and_provider_risk(self):
+        architecture = (ROOT / "docs/architecture.md").read_text()
+        integrations = (ROOT / "docs/integrations.md").read_text()
+        for value in ("Planned keyless access", "rate limits", "300 TB/month",
+                      "easier to replace", "independent providers", "published limits"):
+            self.assertIn(value.lower(), (architecture + integrations).lower())
+        self.assertIn("Basic use requires no developer-supplied", integrations)
+        self.assertIn("not an already deployed free service", integrations)
+        self.assertIn("unbudgeted US fallback", architecture)
 
     def test_storage_sum_and_unknowns_are_explicit(self):
         data = self.data["storage"]
@@ -177,43 +215,33 @@ class ReportTests(unittest.TestCase):
                     privacy_issues(public_file_text(path)), [], str(path.relative_to(ROOT))
                 )
 
-    def test_architecture_preserves_original_owner_drawio_exports(self):
-        for page, phase in ((2, "Backfill"), (1, "After backfill")):
-            name = f"solana-historical-research-Page-{page}.drawio.png"
-            png = ROOT / "docs/diagrams" / name
+    def test_architecture_uses_latest_owner_drawio_exports(self):
+        for version, phase in (("1_2", "Backfill"), ("2_2", "Live")):
+            png = ROOT / "docs/diagrams" / f"solana-historical-{version}.drawio.png"
             source = ElementTree.fromstring(public_file_text(png))
-            diagram = next(
-                node for node in source.findall("diagram") if node.get("name") == f"Page-{page}"
-            )
+            diagram = next(node for node in source.findall("diagram") if node.get("name") == phase)
             labels = " ".join(cell.get("value", "") for cell in diagram.iter("mxCell"))
-            for label in ("Historical Archive", "Active Archive", "Full-History Replica"):
-                self.assertIn(label, labels)
-            self.assertIn("24x workers" if page == 2 else "Head Capture", labels)
-            if page == 2:
+            self.assertIn("Archive", labels)
+            self.assertIn("Workers" if phase == "Backfill" else "Head", labels)
+            self.assertNotRegex(re.sub(r"<[^>]+>", " ", labels), r"\b\d+x?\s+[Ww]orkers")
+            if phase == "Backfill":
                 self.assertIn("Old Faithful", labels)
             width, height = struct.unpack_from(">II", png.read_bytes(), 16)
-            self.assertGreaterEqual(width, 400)
-            self.assertGreaterEqual(height, 300)
+            self.assertGreaterEqual(width, 700)
+            self.assertGreaterEqual(height, 90)
         self.assertIn("Architecture & how it works", (ROOT / "docs/diagrams/README.md").read_text())
 
-    def test_preserved_mermaid_exports_remain_source_bound(self):
-        for name in ("backfill-2027", "capture-access-2027"):
-            folder = ROOT / "docs/diagrams"
-            source = (folder / (name + ".mmd")).read_bytes()
-            svg = ElementTree.fromstring((folder / (name + ".svg")).read_bytes())
-            self.assertEqual(svg.get("data-source-sha256"), sha256(source).hexdigest())
-            self.assertIn("Dataforest", source.decode())
-            self.assertIn("WebNX", source.decode())
-            width, height = struct.unpack_from(">II", (folder / (name + ".png")).read_bytes(), 16)
-            self.assertGreaterEqual(width, 400)
-            self.assertGreaterEqual(height, 300)
-            self.assertIn(name + ".svg", (folder / "README.md").read_text())
+    def test_only_current_diagram_assets_remain(self):
+        folder = ROOT / "docs/diagrams"
+        self.assertEqual({p.name for p in folder.iterdir() if p.is_file()}, {
+            "README.md", "solana-historical-1_2.drawio.png", "solana-historical-2_2.drawio.png",
+        })
 
     def test_active_owner_drawio_exports_keep_read_write_labels(self):
         folder = ROOT / "docs/diagrams"
         for name, required in (
-            ("solana-historical-backfill.drawio.png", ("Workers", "Ledger", "Snapshots")),
-            ("solana-historical-live.drawio.png", ("Finalized", "Head", "Storage")),
+            ("solana-historical-1_2.drawio.png", ("Workers", "Archive", "Ledger", "Snapshots")),
+            ("solana-historical-2_2.drawio.png", ("Finalized", "Head", "Archive")),
         ):
             path = folder / name
             tree = ElementTree.fromstring(public_file_text(path))
@@ -227,7 +255,7 @@ class ReportTests(unittest.TestCase):
                 self.assertIn(name, doc.read_text())
         for doc in (ROOT / "README.md", ROOT / "docs/architecture.md", folder / "README.md"):
             text = doc.read_text()
-            self.assertIn("Worker counts are indicative", text)
+            self.assertIn("All workers fetch inputs", text)
             self.assertIn("API or download service", text)
 
     def test_new_capacity_plan_keeps_two_independent_full_copies(self):
@@ -248,19 +276,27 @@ class ReportTests(unittest.TestCase):
 
     def test_diagrams_show_storage_workers_and_direct_dual_writes(self):
         folder = ROOT / "docs/diagrams"
-        backfill = (folder / "backfill-2027.mmd").read_text()
-        self.assertIn('storage("Storage hosts")', backfill)
-        for destination in ("eu", "us"):
-            self.assertIn("workers --> " + destination, backfill)
-        self.assertNotIn("eu --> us", backfill)
-        capture = (folder / "capture-access-2027.mmd").read_text()
-        for destination in ("eu", "us"):
-            self.assertIn("verify --> " + destination, capture)
-        self.assertNotIn("eu --> us", capture)
+        for version, prefix, expected in (
+            ("1_2", "xxTRimY4-KS4-6_Y2k7Z-", {("23", "22"): "GET", ("26", "22"): "GET",
+                                                     ("23", "26"): "SET", ("26", "26"): "SET"}),
+            ("2_2", "qO8Smt1WFaHzG3SJRyIX-", {("10", "3"): "GET", ("10", "11"): "SET",
+                                                      ("14", "11"): "GET"}),
+        ):
+            tree = ElementTree.fromstring(public_file_text(folder / f"solana-historical-{version}.drawio.png"))
+            cells = list(tree.iter("mxCell"))
+            actual = {}
+            for edge in (c for c in cells if c.get("edge") == "1"):
+                label = next(c.get("value") for c in cells if c.get("parent") == edge.get("id"))
+                actual[(edge.get("source").removeprefix(prefix), edge.get("target").removeprefix(prefix))] = re.sub(r"<[^>]+>", "", label)
+            self.assertEqual(actual, expected)
+        notes = (folder / "README.md").read_text()
+        for phrase in ("blue EU", "green EU/US", "archive-local workers", "not EU-to-US replication",
+                       "directly to both", "no worker counts"):
+            self.assertIn(phrase, notes)
 
     def test_drawio_metadata_is_scanned_for_private_identifiers(self):
         original = (
-            ROOT / "docs/diagrams/solana-historical-research-Page-1.drawio.png"
+            ROOT / "docs/diagrams/solana-historical-2_2.drawio.png"
         ).read_bytes()
         position = 8
         while original[position + 4 : position + 8] != b"tEXt":
@@ -293,8 +329,8 @@ class ReportTests(unittest.TestCase):
             for (source, caption), (name, title) in zip(
                 blocks,
                 (
-                    ("solana-historical-backfill.drawio.png", "Figure 1 — Historical backfill"),
-                    ("solana-historical-live.drawio.png", "Figure 2 — Continuous sync and historical access"),
+                    ("solana-historical-1_2.drawio.png", "Figure 1 — Historical backfill"),
+                    ("solana-historical-2_2.drawio.png", "Figure 2 — Continuous sync and historical access"),
                 ),
             ):
                 self.assertEqual(

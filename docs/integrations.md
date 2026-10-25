@@ -29,6 +29,19 @@ to connect other tools. The new historical-state backend supplies account bytes
 and replay inputs to SVM Replay, Txlab and external clients through the same API.
 Missing historical inputs must fail explicitly, not silently use present-day state.
 
+## Planned keyless free access
+
+SVM Replay will fetch historical state and replay inputs through the bounded free
+API by default. Supported Surfpool/Anchor workflows inherit that integration;
+the Txlab replay UI uses the same backend. Basic use requires no developer-supplied
+API key. This is planned backend work, not an already deployed free service or a
+claim that the open integration PRs have merged.
+
+Published limits cover request rates, scans and transfers; enforce them server-side. Authentication remains for
+higher quotas and paid jobs; do not distribute a shared secret in clients.
+Verified adoption rewards require identifiable external projects, not anonymous
+traffic. Additional tools can integrate through the documented API.
+
 Earlier merged fixes remain separate: LiteSVM
 [#400](https://github.com/LiteSVM/litesvm/pull/400),
 [#402](https://github.com/LiteSVM/litesvm/pull/402),

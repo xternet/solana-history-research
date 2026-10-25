@@ -1,6 +1,6 @@
 # Architecture & how it works
 
-Planned production design, updated October 24, 2026; not the offline demo's current capabilities.
+Planned production design, updated October 25, 2026; not the offline demo's current capabilities.
 
 ## 3.1. Historical backfill
 
@@ -9,45 +9,59 @@ Planned production design, updated October 24, 2026; not the offline demo's curr
 - **Store:** Workers write the same verified output directly to both complete EU/US copies.
 
 <p align="center">
-  <img src="solana-historical-backfill.drawio.png" alt="GET fetches inputs for workers on our cluster, heads and storage hosts; SET writes both full copies" />
+  <img src="solana-historical-1_2.drawio.png" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
-<p align="center"><sub>Verified writes to both copies. Worker counts are indicative.</sub></p>
+<p align="center"><sub>All workers fetch inputs and write verified output directly to both archives.</sub></p>
 
-[Editable draw.io PNG](solana-historical-backfill.drawio.png)
+[Editable draw.io PNG](solana-historical-1_2.drawio.png)
+
+The blue EU circle is our owned cluster. The green EU/US circles are workers on
+the future head servers. Red **Workers + Archive** hosts combine a full history
+copy with qualified replay compute. The upper GET arrow lets archive-local workers
+fetch source inputs too; the right SET loop means those workers write directly to both
+archives, not EU-to-US replication. Each worker seals verified output once and
+sends identical segments to both destinations.
 
 ## 3.2. Continuous sync & historical access
 
 - **Capture:** TeraSwitch Frankfurt and Newark run independent non-voting heads after their temporary worker phase.
 - **Append:** Reconcile finalized boundaries, verify updates and write sealed history directly to both copies.
-- **Serve:** Dataforest Frankfurt is the primary; WebNX Ogden holds a full copy and provides limited standby/API reads.
+- **Serve:** Dataforest Frankfurt is the primary; BudgetVM Detroit holds a full copy and provides limited standby/API reads.
 
 <p align="center">
-  <img src="solana-historical-live.drawio.png" alt="EU and US heads capture finalized updates; SET writes both full copies and user GET goes through the API or download service" />
+  <img src="solana-historical-2_2.drawio.png" alt="Independent EU/US heads capture finalized Solana updates and write both full archives; users read through the API or download service" />
   <br />
   <sub>Figure 2 — Continuous sync and historical access</sub>
 </p>
 
-<p align="center"><sub>Independent heads update both copies; GET uses the API or download service.</sub></p>
+<p align="center"><sub>Independent heads update both archives; users read through the API or download service.</sub></p>
 
-[Editable draw.io PNG](solana-historical-live.drawio.png)
+[Editable draw.io PNG](solana-historical-2_2.drawio.png)
+
+The same green hosts become **Head (EU/US)** after their worker phase. Each
+captures finalized changes independently; verification reconciles overlapping
+updates before idempotent writes reach both **Archive** destinations. The user
+reads historical state or downloads through the service, not raw database access.
 
 ## Diagram notes
 
 Both heads share TeraSwitch, so geographic diversity is not head-provider diversity.
+This concentration risk is accepted: head compute is easier to replace than the
+archives. TeraSwitch balances validator proximity, hardware and price; it is not
+a claim of measured lowest latency. Storage providers remain independent.
 Standby is manual and rate-limited at the last verified checkpoint, not instant
 or equal-throughput failover. Capture starts before the final backfill/live join.
 Archive-to-archive transfers are for repair or catch-up, not the normal write path.
 
-GET/SET labels describe logical access, not a specific network protocol. The API
-and verification software run on the existing hosts, not an extra server.
-The displayed PNGs retain their editable draw.io data and are used unchanged.
-
-Earlier generated alternatives are retained:
-[Backfill Mermaid](backfill-2027.mmd) · [SVG](backfill-2027.svg) · [PNG](backfill-2027.png);
-[Continuous sync Mermaid](capture-access-2027.mmd) · [SVG](capture-access-2027.svg) · [PNG](capture-access-2027.png).
-The original numbered draw.io exports are also preserved as design history.
+GET/SET labels describe logical access, not a specific network protocol. GET arrows
+point from requester to source; returned data travels in the opposite direction.
+The API and verification software run on the existing hosts, not an extra server.
+There are no worker counts in these figures: use the indicative, unbenchmarked
+allocations in the [server plan](../architecture.md#planned-machines).
+The two user-supplied PNGs are used unchanged and retain embedded editable draw.io
+data; open the PNG itself in app.diagrams.net to edit it. Superseded exports have been removed.
 
 [Technical design](../architecture.md) · [Capacity and access](../capacity-plan.md)

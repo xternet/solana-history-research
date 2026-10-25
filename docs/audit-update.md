@@ -27,7 +27,7 @@ RAM decode/extract p50: 0.190 → 0.860 ms. This is not an HDD or whole-request 
 
 ### Capacity
 
-Updated EU envelope: 2 × (18 − 2) × 28 TB × 90% = **806.4 TB**. Updated US envelope: 5 × (12 − 2) × 18 TB × 90% = **810 TB**. These are two complete copies, before filesystem overhead, not pooled storage. The [2027 capacity plan](capacity-plan.md) replaces the former SX295/Artnet layout.
+Updated EU and selected US envelopes: 2 × (18 − 2) × 28 TB × 90% = **806.4 TB per copy**, using Dataforest and BudgetVM respectively. These are two complete copies, before filesystem overhead, not pooled storage. WebNX remains an unbudgeted fallback. The [2027 capacity plan](capacity-plan.md) replaces the former SX295/Artnet layout.
 
 The recomputed central end-2027 scenario is about 525 TB per copy; the stress scenario is about 648 TB, including declared planning allowances. Neither is a measured full-history bound. Reforecast monthly and obtain approval before approaching 10% free capacity; no mid-year expansion server is assumed.
 

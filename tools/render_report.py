@@ -333,9 +333,10 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "",
         "### Capacity",
         "",
-        "Updated EU envelope: 2 × (18 − 2) × 28 TB × 90% = **806.4 TB**. "
-        "Updated US envelope: 5 × (12 − 2) × 18 TB × 90% = **810 TB**. "
+        "Updated EU and selected US envelopes: 2 × (18 − 2) × 28 TB × 90% = "
+        "**806.4 TB per copy**, using Dataforest and BudgetVM respectively. "
         "These are two complete copies, before filesystem overhead, not pooled storage. "
+        "WebNX remains an unbudgeted fallback. "
         "The [2027 capacity plan](capacity-plan.md) replaces the former SX295/Artnet layout.",
         "",
     ]
