@@ -48,7 +48,7 @@ It replaces the earlier SX295/Artnet expansion plan, not the retained measuremen
 
 | Stage | Target period | Resources |
 |---|---|---|
-| M1: genesis–2020 beta | November–December 2026 | Existing eight-worker cluster and temporary storage |
+| M1: genesis–2020 beta | October–December 2026 | Existing eight-worker cluster and temporary storage; self-funded R&D already underway |
 | M2: full history and dual capture | January–March 2027 | Same workers plus spare storage/head compute; transition heads before final catch-up |
 | Operations and compatibility upgrades | April–December 2027 | Two full storage sites and two heads; temporary worker allocations end |
 
@@ -84,7 +84,10 @@ Port speed alone does not establish end-to-end transfer speed.
 BudgetVM's workload/distribution permission and overage terms must be confirmed;
 the checkout label does not waive its acceptable-use policy. Its monthly billing
 is budgeted for twelve months, not assumed to require annual prepayment.
-Dataforest's minimum term, billing-period discounts and setup fee are unconfirmed.
+Dataforest's supplier reply offers a six-month minimum with €399 setup, rather
+than its standard 24-month minimum, and 5% off twelve months prepaid. The selected
+contract, renewal terms and combination of discount/setup need written confirmation.
+See [supplier commitments](supplier-commitments.md), including the setup allowance.
 
 WebNX Ogden remains a secondary US option: 810 TB modeled envelope and 500 TB/month
 outgoing at $1,851/month. It is not an additional funded machine.
@@ -102,6 +105,11 @@ Recipient acceptance and provider approval are required; the recipient pays futu
 operations. No indefinite free support or future-year funding is assumed.
 
 ## Qualification
+
+See the [100-slot correctness and integrated qualification plan](validation-plan.md)
+and [keyless usage/demand scenarios](usage-plan.md). The
+[four-host/eight-stream download result](fetch-evidence.md) qualifies source
+access only, not eight-worker native replay throughput.
 
 Reforecast measured complete inventory, native context, checkpoints and actual
 growth before scaling. Confirm the replica's disk/RAID layout, the source of

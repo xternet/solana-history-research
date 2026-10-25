@@ -19,6 +19,7 @@ PUBLIC_DOMAINS = {
     "www.w3.org",
     "app.diagrams.net",
     "draw.io",
+    "www.budgetvm.com",
 }
 
 

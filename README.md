@@ -16,6 +16,10 @@ transactions or reproduce the larger benchmarks.
 | [Latest audit](docs/audit-update.md) | Updated storage candidates, load/cold measurements and implementation gates |
 | [Benchmarks](docs/benchmarks.md) | STORAGE, GET and SET tables; measured versus projected values |
 | [Test hardware](docs/test-environment.md) | Actual CPU, RAM, disks, worker limits and cache conditions |
+| [2020-source download test](docs/fetch-evidence.md) | Four hosts/eight streams; verified ledger bytes, not replay throughput |
+| [2020 validation plan](docs/validation-plan.md) | Reproducible 100-slot selection and historical correctness acceptance gates |
+| [Usage and demand](docs/usage-plan.md) | Keyless metrics, privacy and low/medium/high traffic scenarios |
+| [Supplier commitments](docs/supplier-commitments.md) | Quoted billing choices versus contractual minimums |
 | [Architecture](docs/architecture.md) | Snapshots, archived blocks, per-change capture, indexes and serving |
 | [2027 capacity plan](docs/capacity-plan.md) | Two complete EU/US copies, calendar growth and traffic limits |
 | [Architecture figures](docs/diagrams/README.md) | Backfill and continuous capture; editable draw.io SVGs |

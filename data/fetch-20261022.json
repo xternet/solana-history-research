@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-22",
+  "scope": "source download only; no native replay",
+  "hosts": 4,
+  "streams": 8,
+  "accepted_bytes": 771952467648,
+  "accepted_ranges": 384,
+  "publisher_verified_epochs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    34,
+    35,
+    36,
+    37,
+    51,
+    52,
+    68,
+    69,
+    85,
+    102
+  ],
+  "all_streams_active_MB_s": 41.8793795596844,
+  "resumed_window_MB_s": 35.85285435629476,
+  "resumed_window_seconds": 21530.896016497165,
+  "failed_prefix_bytes_excluded": 13477761344,
+  "source_pins": {
+    "metrics.json": "74c56c1cf0e1aa13d99be687196268a0a06b22f7bd2efb9ea6480b68d36be13a",
+    "independent-audit.json": "044510d3de3bc62fbe8fd429fecd96ef63ba736a43e7c5b287db8ee75eda20ea",
+    "final-checks.json": "c7617301774fa77440fde44ce66fd67d1c34d8837796d50ca29c918ad546b082"
+  },
+  "raw_receipts_public": false
+}

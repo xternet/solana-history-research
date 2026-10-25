@@ -84,7 +84,7 @@ two complete storage copies remain with independent providers.
 Four selected dedicated machines; WebNX is an unbudgeted US fallback, not an
 additional server. These are planned configurations, not deployed hosts.
 
-| Provider / role | Location | CPU | RAM | Drives | Outgoing / month; port | Jobs | Net price / month; year |
+| Provider / role | Location | CPU | RAM | Drives | Outgoing / month; port | Workers | Net price / month; year |
 |---|---|---|---|---|---|---|---|
 | TeraSwitch / Head | EU<br>Frankfurt | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 |
 | TeraSwitch / Head | US<br>Newark | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 (estimate) |
@@ -92,13 +92,15 @@ additional server. These are planned configurations, not deployed hosts.
 | BudgetVM / Storage | US<br>Detroit | 2x Xeon Gold 6152<br>44C/88T total | 512 GB<br>DDR4 | 36x28 TB HDD; 960 GB NVMe boot; 6.4 TB enterprise NVMe | 300 TB; 10 Gbps; unlimited incoming | 4–5 | $2,269; $27,228 (monthly billing annualized) |
 | WebNX / Storage fallback | US<br>Ogden | 2x Xeon Bronze 3106<br>16C/16T total | 384 GB<br>DDR4 | 60x18 TB HDD; 480 GB SSD boot | 500 TB; 10 Gbps | 0–1 | $1,851; $22,212 |
 
-Jobs are estimated concurrent replay workers, not measured equal-speed throughput.
+Workers are estimated concurrent replay allocations, not measured equal-speed throughput.
 
 BudgetVM is budgeted with monthly billing; alternatives are $6,759 per quarter
 ($27,036 annualized) or $26,689 annual prepayment, with no setup fee. True HBA/IT
 passthrough, written workload approval for continuous replay and bulk downloads,
-and overage terms must be confirmed. Dataforest's quoted monthly rate does not
-establish its minimum term, setup fee or payment-period discount.
+and overage terms must be confirmed. Dataforest offers a six-month minimum with
+€399 setup, versus its standard 24-month minimum; twelve months prepaid receive
+5% off. Selected renewal/cancellation and combined discount/setup terms remain
+subject to the final order. See [supplier commitments](supplier-commitments.md).
 
 Own cluster: **8 workers**; estimated backfill total **26–37**, excluding the WebNX fallback.
 **Estimates, not benchmarks:** allow 8–16 CPU threads and approximately 40 GiB per

@@ -42,10 +42,14 @@ higher quotas and paid jobs; do not distribute a shared secret in clients.
 Verified adoption rewards require identifiable external projects, not anonymous
 traffic. Additional tools can integrate through the documented API.
 
-Earlier merged fixes remain separate: LiteSVM
+Earlier fixes (**merged**) remain separate: LiteSVM
 [#400](https://github.com/LiteSVM/litesvm/pull/400),
 [#402](https://github.com/LiteSVM/litesvm/pull/402),
 [#403](https://github.com/LiteSVM/litesvm/pull/403); Surfpool
 [#762](https://github.com/solana-foundation/surfpool/pull/762),
 [#764](https://github.com/solana-foundation/surfpool/pull/764),
 [#795](https://github.com/solana-foundation/surfpool/pull/795).
+
+The [usage plan](usage-plan.md) includes aggregate daily keyless traffic and
+outgoing bandwidth, separate from verified-project reward accounting. Basic free
+use is not conditional on purchasing higher quotas or bulk delivery.
