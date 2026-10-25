@@ -75,7 +75,7 @@ The model combines different stage allocations and populations: **not fleet thro
 * The local example now rejects unproven coverage gaps and demonstrates shard-aware version pointers. Parent assertions still require independently verified source data.
 * Native capture remains research tooling: production streaming, fork identity, complete startup inventory and a clean lifecycle still need implementation.
 * Qualify same-slot program upgrades, parent ProgramData use, epoch/reward transitions and the full native-runtime suite at matching source pins.
-* Qualify the planned manual, rate-limited warm standby and failback; current recovery tests do not demonstrate hot failover or redundant head capture.
+* Qualify planned [regional API routing](architecture.md#regional-api-routing) and two-way request fallback under outage/overload; current research tests do not demonstrate these M2 production capabilities or redundant head capture.
 * Pointer database comparisons have different cache/protocol conditions and do not establish a universal minimum-size or fastest database.
 
 The raw operational captures are not bundled. Evidence hashes identify retained receipts; they are not independently authenticated chain-state proofs.

@@ -108,6 +108,13 @@ Planned free access is built into SVM Replay, supported Surfpool/Anchor workflow
 and the Txlab replay UI, without developers supplying an API key. Published
 quotas and abuse controls apply; this is not a currently deployed service.
 
+Planned tools select and remember the nearer EU/US API endpoint and retry once at
+the other site on failure or overload, within client quotas and each site's
+verified coverage and traffic limits. M2 includes a tagged public production
+release with deployment/API and recovery instructions; see
+[regional routing](docs/architecture.md#regional-api-routing) and
+[release criteria](docs/integrations.md#m2-public-release).
+
 ## What this does not prove
 
 * Complete state capture across every runtime era or epoch transition.

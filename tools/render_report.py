@@ -420,8 +420,9 @@ def audit_update(audit: dict, baseline: dict) -> str:
         "complete startup inventory and a clean lifecycle still need implementation.",
         "* Qualify same-slot program upgrades, parent ProgramData use, epoch/reward transitions "
         "and the full native-runtime suite at matching source pins.",
-        "* Qualify the planned manual, rate-limited warm standby and failback; current recovery "
-        "tests do not demonstrate hot failover or redundant head capture.",
+        "* Qualify planned [regional API routing](architecture.md#regional-api-routing) and "
+        "two-way request fallback under outage/overload; current research tests do not "
+        "demonstrate these M2 production capabilities or redundant head capture.",
         "* Pointer database comparisons have different cache/protocol conditions and do not "
         "establish a universal minimum-size or fastest database.",
         "",

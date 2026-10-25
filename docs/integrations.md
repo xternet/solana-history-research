@@ -42,6 +42,11 @@ higher quotas and paid jobs; do not distribute a shared secret in clients.
 Verified adoption rewards require identifiable external projects, not anonymous
 traffic. Additional tools can integrate through the documented API.
 
+Tools will select and remember the nearer EU/US API endpoint, then retry once at
+the other site on timeout, unavailability or overload. Client quotas, verified
+coverage and site traffic limits still apply; fallback cannot bypass an exhausted
+user quota. See [regional routing](architecture.md#regional-api-routing).
+
 Earlier fixes (**merged**) remain separate: LiteSVM
 [#400](https://github.com/LiteSVM/litesvm/pull/400),
 [#402](https://github.com/LiteSVM/litesvm/pull/402),
@@ -53,3 +58,9 @@ Earlier fixes (**merged**) remain separate: LiteSVM
 The [usage plan](usage-plan.md) includes aggregate daily keyless traffic and
 outgoing bandwidth, separate from verified-project reward accounting. Basic free
 use is not conditional on purchasing higher quotas or bulk delivery.
+
+## M2 public release
+
+M2 acceptance requires a tagged public production release with deployment/API
+and recovery instructions. Test two-way regional API fallback and return to the
+preferred site, including outage, overload, coverage and quota checks.

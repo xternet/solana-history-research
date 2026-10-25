@@ -79,6 +79,15 @@ claim of measured lowest capture latency. A simultaneous head outage still
 requires verified catch-up; it must not silently create historical gaps. The
 two complete storage copies remain with independent providers.
 
+## Regional API routing
+
+Planned tools select and remember the nearer EU/US API endpoint from the user's
+approximate location. On timeout, unavailability or overload, retry once at the
+other site. Both sites serve only their verified coverage; fallback respects
+client quotas and each site's traffic limits and cannot bypass an exhausted user
+quota. If both sites are full, cap or queue requests. This request routing is an
+M2 deliverable; server repair and archive recovery remain manual.
+
 ## Planned machines
 
 Four selected dedicated machines; WebNX is an unbudgeted US fallback, not an
@@ -204,18 +213,17 @@ RAID is not an independent replica or a versioned backup. Preserve source inputs
 until capture completeness and recovery have been qualified.
 Archive-to-archive replication remains a repair/catch-up path when producer
 staging is no longer available; it is not required for every normal write.
-The independent replica is also a planned **limited warm standby**: a running,
-rate-limited API can serve account state and stored replay inputs through the
-last completely verified checkpoint. Indexes, consistent manifests and service
-metadata must be ready on the replica infrastructure; routing and access
-controls must remain available if the primary provider is down.
+Both sites run a planned rate-limited API for account state and stored replay
+inputs through each site's last completely verified checkpoint. Indexes,
+consistent manifests and service metadata must be ready at both sites; routing
+and access controls must remain available if either provider is down.
 
-M2 must test manual failover and failback, published coverage/lag and request
-limits. Reject incomplete generations; do not report unreplicated head coverage.
-Maintain versioned recovery copies independently of the standby service.
-This is not instant or equal-throughput failover. The second independent capture
-node is a separate part of the new plan, not a property of RAID or replication.
-Write promotion and automatic failover are not included.
+M2 must test automatic EU/US request fallback in both directions during outage
+and overload, return to the preferred endpoint, and enforcement of coverage and
+request limits. Reject incomplete generations; do not report unreplicated head
+coverage. Maintain versioned recovery copies independently of the serving APIs.
+Fallback capacity is limited by the surviving site's available resources.
+Server repair, archive recovery and write promotion remain manual.
 These are production deliverables, not capabilities demonstrated by the offline example.
 
 ## Public access and funded operations
