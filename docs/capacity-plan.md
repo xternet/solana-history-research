@@ -106,7 +106,7 @@ operations. No indefinite free support or future-year funding is assumed.
 
 ## Qualification
 
-See the [100-slot correctness and integrated qualification plan](validation-plan.md)
+See the [three M1 checks: fetching, 100-slot replay and API access](validation-plan.md)
 and [keyless usage/demand scenarios](usage-plan.md). The
 [four-host/eight-stream download result](fetch-evidence.md) qualifies source
 access only, not eight-worker native replay throughput.

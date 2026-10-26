@@ -17,7 +17,7 @@ transactions or reproduce the larger benchmarks.
 | [Benchmarks](docs/benchmarks.md) | STORAGE, GET and SET tables; measured versus projected values |
 | [Test hardware](docs/test-environment.md) | Actual CPU, RAM, disks, worker limits and cache conditions |
 | [2020-source download test](docs/fetch-evidence.md) | Four hosts/eight streams; verified ledger bytes, not replay throughput |
-| [2020 validation plan](docs/validation-plan.md) | Reproducible 100-slot selection and historical correctness acceptance gates |
+| [M1 acceptance tests](docs/validation-plan.md) | Robust fetching, 100-slot replay and open API access through 2020 |
 | [Usage and demand](docs/usage-plan.md) | Keyless metrics, privacy and low/medium/high traffic scenarios |
 | [Health, fallback and caps](docs/operations.md) | Planned sync/database checks, alerts, regional routing and fair-use methods |
 | [Supplier commitments](docs/supplier-commitments.md) | Quoted billing choices versus contractual minimums |
