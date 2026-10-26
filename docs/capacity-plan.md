@@ -48,7 +48,7 @@ It replaces the earlier SX295/Artnet expansion plan, not the retained measuremen
 
 | Stage | Target period | Resources |
 |---|---|---|
-| M1: genesis–2020 beta | October–December 2026 | Existing eight-worker cluster and temporary storage; self-funded R&D already underway |
+| M1: genesis–2020 beta | By November 30, 2026; 2–3 months | Existing eight-worker cluster and temporary storage; self-funded R&D already underway |
 | M2: full history and dual capture | January–March 2027 | Same workers plus spare storage/head compute; transition heads before final catch-up |
 | Operations and compatibility upgrades | April–December 2027 | Two full storage sites and two heads; temporary worker allocations end |
 
