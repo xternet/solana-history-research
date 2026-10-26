@@ -27,7 +27,7 @@ class ReviewEvidenceTests(unittest.TestCase):
             self.assertIn(f'{value:,.2f}', doc)
         for value in ((6*month+setup)*fx, (12*month+setup)*fx):
             self.assertIn(f'{value:,.2f}', doc)
-        self.assertEqual(50724 + 14336 + 34940, 100000)
+        self.assertEqual(36388 + 28672 + 34940, 100000)
         self.assertEqual(21020 + 27228 + 22080 + 28672 + 1000, 100000)
         self.assertEqual(20000 + 100000 + 45000 + 10000, 175000)
 
