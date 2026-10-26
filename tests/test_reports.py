@@ -1,6 +1,7 @@
 import base64
 import json
 import ipaddress
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import re
 import struct
@@ -20,6 +21,7 @@ PUBLIC_DOMAINS = {
     "app.diagrams.net",
     "draw.io",
     "www.budgetvm.com",
+    "www.ecb.europa.eu",
 }
 
 
@@ -140,9 +142,13 @@ class ReportTests(unittest.TestCase):
                        "Newark price/stock require confirmation", "2x960 GB RAID1 boot",
                        "2x3.84 TB NVMe", "150 TB/month outgoing"):
             self.assertIn(phrase, text)
-        for phrase in ("4–8", "6–8", "4–5", "0–1", "$11,040", "≈$20,570", "$22,212",
+        for phrase in ("4–8", "6–8", "4–5", "0–1", "$11,040", "$22,212",
                        "$27,228", "no quoted NVMe scratch"):
             self.assertIn(phrase, text)
+        pricing = json.loads((ROOT / "data/planning-pricing-20261026.json").read_text())
+        month = Decimal(pricing["dataforest_monthly_eur"]) * Decimal(pricing["eur_usd"])
+        for amount in (month, month * 12):
+            self.assertIn(f'≈${amount.quantize(Decimal(1), rounding=ROUND_HALF_UP):,}', text)
 
     def test_planned_workers_do_not_commit_to_ownership_or_an_existing_cluster(self):
         for name in ("README.md", "docs/architecture.md", "docs/capacity-plan.md",

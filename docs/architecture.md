@@ -101,11 +101,13 @@ additional server. These are planned configurations, not deployed hosts.
 |---|---|---|---|---|---|---|---|
 | TeraSwitch / Head | EU<br>Frankfurt | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 |
 | TeraSwitch / Head | US<br>Newark | EPYC 9354<br>32C/64T | 512 GB<br>DDR5 | 2x960 GB RAID1 boot; 2x3.84 TB NVMe | 150 TB; 2x25 Gbps | 4–8 | $920; $11,040 (estimate) |
-| Dataforest / Storage | EU<br>Frankfurt | EPYC 7713<br>64C/128T | 512 GB<br>DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | ≈$1,714; ≈$20,570 |
+| Dataforest / Storage | EU<br>Frankfurt | EPYC 7713<br>64C/128T | 512 GB<br>DDR4 ECC | 36x28 TB HDD; 2x4 TB NVMe | 250 TB; 2x10 Gbps | 6–8 | ≈$1,713; ≈$20,561 |
 | BudgetVM / Storage | US<br>Detroit | 2x Xeon Gold 6152<br>44C/88T total | 512 GB<br>DDR4 | 36x28 TB HDD; 960 GB NVMe boot; 6.4 TB enterprise NVMe | 300 TB; 10 Gbps; unlimited incoming | 4–5 | $2,269; $27,228 (monthly billing annualized) |
 | WebNX / Storage fallback | US<br>Ogden | 2x Xeon Bronze 3106<br>16C/16T total | 384 GB<br>DDR4 | 60x18 TB HDD; 480 GB SSD boot | 500 TB; 10 Gbps | 0–1 | $1,851; $22,212 |
 
 Workers are estimated concurrent replay allocations, not measured equal-speed throughput.
+Planning estimates as of October 26, 2026; configurations, prices and availability
+may change before grant approval.
 
 BudgetVM is budgeted with monthly billing; alternatives are $6,759 per quarter
 ($27,036 annualized) or $26,689 annual prepayment, with no setup fee. True HBA/IT
@@ -128,7 +130,7 @@ BudgetVM's 4–5 range uses the same 16-thread storage-job allocation as Datafor
 reserving one quarter of threads in the low case; it is not measured throughput.
 WebNX has **no quoted NVMe scratch** and contributes no scheduled workers.
 The [worker plan](../data/worker-plan-20261024.json) records the arithmetic and assumptions.
-Dataforest's USD figures use the planning rate €1 = $1.1193 (October 23, 2026);
+Dataforest's USD figures use the ECB rate €1 = $1.1188 (October 26, 2026);
 the original quote remains €1,531.48/month, excluding tax.
 
 The head boot pair provides approximately 960 GB mirrored space, not 1.92 TB

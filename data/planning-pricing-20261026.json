@@ -1,0 +1,17 @@
+{
+  "as_of": "2026-10-26",
+  "eur_usd": "1.1188",
+  "fx_source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+  "dataforest_monthly_eur": "1531.48",
+  "dataforest_setup_eur": "399",
+  "budgetvm_annual_usd": 27228,
+  "dual_head_annual_usd": 22080,
+  "m2_transfers_usd": 1000,
+  "m1_total_usd": 20000,
+  "m2_total_usd": 100000,
+  "maintenance_usd": 45000,
+  "adoption_usd": 10000,
+  "grant_total_usd": 175000,
+  "rounding": "Dataforest annual allowance includes setup and rounds up to the next $10; July's EU half rounds up to the next dollar. First tranche receives the remaining hosting allowance. M2 R&D is the residual within $100,000.",
+  "status": "Planning inputs as of this date, not new supplier confirmations or reserved stock; final specifications, pricing and availability may change before grant approval."
+}
