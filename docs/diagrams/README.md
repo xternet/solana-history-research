@@ -5,11 +5,11 @@ Planned production design, updated October 25, 2026; not the offline demo's curr
 ## 3.1. Historical backfill
 
 - **Fetch:** Genesis, verified snapshots and free-access Old Faithful ledger inputs.
-- **Reconstruct:** Our eight workers, both storage hosts and temporarily the head servers replay size-balanced ranges.
+- **Reconstruct:** Replay workers, both storage hosts and temporarily the head servers replay size-balanced ranges.
 - **Store:** Workers write the same verified output directly to both complete EU/US copies.
 
 <p align="center">
-  <img src="sol-hist-16px.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
+  <img src="sol-hist-16px.drawio.svg" alt="GET fetches source inputs for backfill, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
@@ -18,7 +18,7 @@ Planned production design, updated October 25, 2026; not the offline demo's curr
 
 [Editable draw.io SVG](sol-hist-16px.drawio.svg)
 
-The blue EU circle is our owned cluster. The green EU/US circles are workers on
+The blue EU circle represents backfill workers. The green EU/US circles are workers on
 the future head servers. Red **Workers + Archive** hosts combine a full history
 copy with qualified replay compute. The upper GET arrow lets archive-local workers
 fetch source inputs too; the right SET loop means those workers write directly to both

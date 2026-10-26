@@ -68,7 +68,7 @@ historical storage estimates.
 ### Backfill
 
 <p align="center">
-  <img src="docs/diagrams/sol-hist-16px.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives." />
+  <img src="docs/diagrams/sol-hist-16px.drawio.svg" alt="GET fetches source inputs for backfill, temporary head-host and archive-local workers; SET writes both full EU/US archives." />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
@@ -87,7 +87,7 @@ historical storage estimates.
 
 [Backfill and after-backfill views](docs/diagrams/README.md).
 These figures describe the planned production backend, not the small offline demo.
-The blue EU workers are our cluster; green EU/US workers temporarily use the head
+The blue EU workers provide backfill compute; green EU/US workers temporarily use the head
 servers. Both red archive hosts also run qualified workers. GET arrows show
 requests, not response direction; SET writes to both archives, not EU-to-US forwarding.
 

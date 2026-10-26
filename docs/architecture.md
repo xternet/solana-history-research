@@ -15,14 +15,14 @@ automatic updates and the context needed at the requested transaction boundary.
 ## Backfill
 
 <p align="center">
-  <img src="diagrams/sol-hist-16px.drawio.svg" alt="GET fetches source inputs for owned, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
+  <img src="diagrams/sol-hist-16px.drawio.svg" alt="GET fetches source inputs for backfill, temporary head-host and archive-local workers; SET writes both full EU/US archives" />
   <br />
   <sub>Figure 1 — Historical backfill</sub>
 </p>
 
 <p align="center"><sub>All workers fetch inputs and write verified output directly to both archives.</sub></p>
 
-The blue EU workers are our existing cluster; green EU/US workers use the rented
+The blue EU workers provide backfill compute; green EU/US workers use the rented
 head servers temporarily. Red **Workers + Archive** hosts also replay inputs.
 The upper GET arrow includes these archive-local workers; their SET loop writes
 to both full archives, not just the local disk or an EU-to-US relay. GET arrows
@@ -37,11 +37,12 @@ co-located on the storage hosts; PostgreSQL service metadata/jobs and bounded
 RocksDB ingestion overlays do not form a third historical payload archive.
 Consistent checkpoint/metadata exports are replicated, not live database files.
 
-Our eight workers and spare storage/head compute replay independent ranges from
+Replay workers and available storage/head compute replay independent ranges from
 qualified starting checkpoints. The two TeraSwitch machines first help backfill,
 then become non-voting capture nodes before the final backfill/live join. Worker
-density is measured per machine, not inferred from RAM alone. No additional
-temporary worker fleet is assumed. Capture retains native effects and finalization,
+density is measured per machine, not inferred from RAM alone. Storage and workers
+are obtained as required.
+Capture retains native effects and finalization,
 not merely third-party RPC subscriptions.
 
 Dataforest and BudgetVM also run replay workers when CPU, RAM, scratch and serving
@@ -114,7 +115,7 @@ and overage terms must be confirmed. Dataforest offers a six-month minimum with
 5% off. Selected renewal/cancellation and combined discount/setup terms remain
 subject to the final order. See [supplier commitments](supplier-commitments.md).
 
-Own cluster: **8 workers**; estimated backfill total **26–37**, excluding the WebNX fallback.
+Additional storage and workers are obtained as required; their source and count are not fixed.
 **Estimates, not benchmarks:** allow 8–16 CPU threads and approximately 40 GiB per
 job, with CPU reserved for shared archive work. The RAM allowance combines the
 retained native-replay and encoder ceilings; it is not a measured integrated job.

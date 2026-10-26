@@ -48,8 +48,8 @@ It replaces the earlier SX295/Artnet expansion plan, not the retained measuremen
 
 | Stage | Target period | Resources |
 |---|---|---|
-| M1: genesis–2020 beta | By November 30, 2026; 2–3 months | Existing eight-worker cluster and temporary storage; self-funded R&D already underway |
-| M2: full history and dual capture | January–March 2027 | Same workers plus spare storage/head compute; transition heads before final catch-up |
+| M1: genesis–2020 beta | By November 30, 2026; 2–3 months | Obtain the storage and workers required; R&D already underway |
+| M2: full history and dual capture | January–March 2027 | Required replay workers plus available storage/head compute; transition heads before final catch-up |
 | Operations and compatibility upgrades | April–December 2027 | Two full storage sites and two heads; temporary worker allocations end |
 
 All four rented machines are funded once for January–December 2027. Planned
@@ -59,8 +59,8 @@ The BudgetVM dual-Xeon storage host is not equivalent to the Dataforest EPYC hos
 no fixed eight-worker allowance is assumed for every rented machine.
 
 The current planning range is 4–8 replay workers per head, 6–8 on Dataforest and
-4–5 on BudgetVM, plus our eight workers: 26–37 allocations, not equal-speed
-throughput units. WebNX is an unbudgeted fallback, with no scheduled replay
+4–5 on BudgetVM. Additional workers and storage are obtained as required;
+these allocations are not equal-speed throughput units. WebNX is an unbudgeted fallback, with no scheduled replay
 workers because it has no quoted NVMe scratch. See the
 [host table](architecture.md#planned-machines).
 

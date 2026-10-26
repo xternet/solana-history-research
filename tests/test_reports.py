@@ -135,14 +135,26 @@ class ReportTests(unittest.TestCase):
         text = (ROOT / "docs/architecture.md").read_text()
         self.assertEqual(text.count("EPYC 9354<br>32C/64T"), 2)
         self.assertEqual(text.count("512 GB<br>DDR5"), 2)
-        for phrase in ("EPYC 7713<br>64C/128T", "16C/16T total", "Own cluster: **8 workers**",
+        for phrase in ("EPYC 7713<br>64C/128T", "16C/16T total", "Additional storage and workers are obtained as required",
                        "Estimates, not benchmarks", "$920/month each",
                        "Newark price/stock require confirmation", "2x960 GB RAID1 boot",
                        "2x3.84 TB NVMe", "150 TB/month outgoing"):
             self.assertIn(phrase, text)
         for phrase in ("4–8", "6–8", "4–5", "0–1", "$11,040", "≈$20,570", "$22,212",
-                       "$27,228", "26–37", "no quoted NVMe scratch"):
+                       "$27,228", "no quoted NVMe scratch"):
             self.assertIn(phrase, text)
+
+    def test_planned_workers_do_not_commit_to_ownership_or_an_existing_cluster(self):
+        for name in ("README.md", "docs/architecture.md", "docs/capacity-plan.md",
+                     "docs/diagrams/README.md"):
+            with self.subTest(document=name):
+                text = (ROOT / name).read_text()
+                self.assertIsNone(re.search(
+                    r"our (?:eight|8|workers|cluster)|own(?:ed)? (?:8x )?workers|own cluster|existing.*worker",
+                    text, re.I,
+                ))
+        timeline = (ROOT / "docs/capacity-plan.md").read_text()
+        self.assertIn("Obtain the storage and workers required", timeline)
 
     def test_budgetvm_is_selected_with_webnx_fallback_and_explicit_billing(self):
         model = json.loads((ROOT / "data/worker-plan-20261024.json").read_text())
